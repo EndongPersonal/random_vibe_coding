@@ -11,19 +11,19 @@ App.register('factory', {
   ],
 
   render() {
-    const modeOpts = ['random', 'dice', 'wheel', 'coin', 'card', 'iching'];
     const modeKeys = {
       random: 'factoryModeRandom', dice: 'factoryModeDice', wheel: 'factoryModeWheel',
       coin: 'factoryModeCoin', card: 'factoryModeCard', iching: 'factoryModeIching'
     };
+    const modeOpts = ['random', 'dice', 'wheel', 'coin', 'card', 'iching'];
 
-    const slotsHTML = this.template.map(t => `
+    const slotsHTML = this.template.map(slot => `
       <div class="factory-row">
-        <span class="factory-label">${t(t.labelKey)}</span>
-        <select class="factory-mode-select" data-slot="${t.id}">
+        <span class="factory-label">${t(slot.labelKey)}</span>
+        <select class="factory-mode-select" data-slot="${slot.id}">
           ${modeOpts.map(m => `<option value="${m}">${t(modeKeys[m])}</option>`).join('')}
         </select>
-        <div class="factory-slot" id="slot-${t.id}">?</div>
+        <div class="factory-slot" id="slot-${slot.id}">?</div>
       </div>
     `).join('');
 
@@ -43,11 +43,11 @@ App.register('factory', {
     const publishBtn = document.getElementById('factoryPublishBtn');
     const slots = {};
 
-    this.template.forEach(t => {
-      slots[t.id] = {
-        el: document.getElementById('slot-' + t.id),
-        select: document.querySelector(`[data-slot="${t.id}"]`),
-        pool: t.pool,
+    this.template.forEach(slot => {
+      slots[slot.id] = {
+        el: document.getElementById('slot-' + slot.id),
+        select: document.querySelector(`[data-slot="${slot.id}"]`),
+        pool: slot.pool,
         value: ''
       };
     });
@@ -69,8 +69,8 @@ App.register('factory', {
       resultEl.innerHTML = t('factoryGenerating');
       publishBtn.style.display = 'none';
 
-      for (const t of this.template) {
-        const s = slots[t.id];
+      for (const slot of this.template) {
+        const s = slots[slot.id];
         const mode = s.select.value;
         s.value = pickWithMode(s.pool, mode);
         s.el.textContent = s.value;
