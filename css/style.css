@@ -1180,17 +1180,19 @@ body {
 .fishing-catch-fish { line-height: 1; }
 
 .fishing-catch-name {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: #fff;
   text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  line-height: 1.3;
 }
 
 .fishing-catch-rarity {
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.8);
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.85);
   text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-  max-width: 220px;
+  max-width: 240px;
+  line-height: 1.5;
 }
 
 @keyframes fishAppear {

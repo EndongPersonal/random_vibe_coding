@@ -202,8 +202,8 @@ App.register('fishing', {
 
       // 鱼出现
       catchFish.innerHTML = `<span style="font-size:5rem;display:block;animation:fishAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);text-shadow:0 0 30px ${caughtFish.color};">${caughtFish.emoji}</span>`;
-      catchName.innerHTML = `${caughtFish.name} <span style="color:${caughtFish.color};font-size:0.9rem;">[${caughtFish.rarity}]</span>`;
-      catchRarity.textContent = caughtFish.desc;
+      catchName.textContent = caughtFish.name;
+      catchRarity.innerHTML = `<span style="color:${caughtFish.color};font-weight:700;font-size:0.9rem;">${caughtFish.rarity}</span> · ${caughtFish.desc}`;
       catchEl.style.display = 'flex';
 
       recordCatch(caughtFish.id);
