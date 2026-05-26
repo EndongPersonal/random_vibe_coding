@@ -3,27 +3,26 @@
 // ============================================================
 
 App.register('factory', {
-  template: [
-    { id: 'who', labelKey: 'factoryLabelWho', pool: Topics.users, result: '' },
-    { id: 'tool', labelKey: 'factoryLabelTool', pool: Topics.tools, result: '' },
-    { id: 'feature', labelKey: 'factoryLabelFeature', pool: Topics.features, result: '' },
-    { id: 'platform', labelKey: 'factoryLabelPlatform', pool: Topics.platforms, result: '' }
-  ],
-
   render() {
     const modeKeys = {
       random: 'factoryModeRandom', dice: 'factoryModeDice', wheel: 'factoryModeWheel',
       coin: 'factoryModeCoin', card: 'factoryModeCard', iching: 'factoryModeIching'
     };
     const modeOpts = ['random', 'dice', 'wheel', 'coin', 'card', 'iching'];
+    const slots = [
+      { id: 'who', labelKey: 'factoryLabelWho' },
+      { id: 'tool', labelKey: 'factoryLabelTool' },
+      { id: 'feature', labelKey: 'factoryLabelFeature' },
+      { id: 'platform', labelKey: 'factoryLabelPlatform' }
+    ];
 
-    const slotsHTML = this.template.map(slot => `
+    const slotsHTML = slots.map(s => `
       <div class="factory-row">
-        <span class="factory-label">${t(slot.labelKey)}</span>
-        <select class="factory-mode-select" data-slot="${slot.id}">
+        <span class="factory-label">${t(s.labelKey)}</span>
+        <select class="factory-mode-select" id="sel-${s.id}">
           ${modeOpts.map(m => `<option value="${m}">${t(modeKeys[m])}</option>`).join('')}
         </select>
-        <div class="factory-slot" id="slot-${slot.id}">?</div>
+        <div class="factory-slot" id="slot-${s.id}">?</div>
       </div>
     `).join('');
 
@@ -41,20 +40,35 @@ App.register('factory', {
   },
 
   onActivate() {
-    const generateBtn = document.getElementById('factoryGenerateBtn');
+    const btn = document.getElementById('factoryGenerateBtn');
     const resultEl = document.getElementById('factoryResult');
     const actionsEl = document.getElementById('factoryActions');
-    const publishBtn = document.getElementById('factoryPublishBtn');
     const copyBtn = document.getElementById('factoryCopyBtn');
-    const slots = {};
+    const publishBtn = document.getElementById('factoryPublishBtn');
 
-    this.template.forEach(slot => {
-      slots[slot.id] = {
-        el: document.getElementById('slot-' + slot.id),
-        select: document.querySelector(`[data-slot="${slot.id}"]`),
-        pool: slot.pool, value: ''
-      };
-    });
+    // 池子映射
+    const pools = {
+      who: Topics.users,
+      tool: Topics.tools,
+      feature: Topics.features,
+      platform: Topics.platforms
+    };
+
+    // 选择器
+    const selects = {
+      who: document.getElementById('sel-who'),
+      tool: document.getElementById('sel-tool'),
+      feature: document.getElementById('sel-feature'),
+      platform: document.getElementById('sel-platform')
+    };
+
+    // 显示槽
+    const slotEls = {
+      who: document.getElementById('slot-who'),
+      tool: document.getElementById('slot-tool'),
+      feature: document.getElementById('slot-feature'),
+      platform: document.getElementById('slot-platform')
+    };
 
     function pickWithMode(pool, mode) {
       switch (mode) {
@@ -70,29 +84,36 @@ App.register('factory', {
       }
     }
 
-    generateBtn.onclick = async () => {
-      generateBtn.disabled = true;
-      resultEl.classList.remove('filled'); resultEl.innerHTML = t('factoryGenerating');
+    btn.onclick = async function() {
+      btn.disabled = true;
+      resultEl.classList.remove('filled');
+      resultEl.innerHTML = t('factoryGenerating');
       actionsEl.style.display = 'none';
 
-      for (const slot of this.template) {
-        const s = slots[slot.id];
-        s.value = pickWithMode(s.pool, s.select.value);
-        s.el.textContent = s.value;
-        s.el.classList.add('filled');
+      const ids = ['who', 'tool', 'feature', 'platform'];
+      const values = {};
+
+      for (const id of ids) {
+        const mode = selects[id].value;
+        values[id] = pickWithMode(pools[id], mode);
+        slotEls[id].textContent = values[id];
+        slotEls[id].classList.add('filled');
         await delay(200);
       }
 
-      const w = slots['who'].value, t = slots['tool'].value, f = slots['feature'].value, p = slots['platform'].value;
-      const final = `给${w}用${t}做一个${f}，发布为${p}`;
-      resultEl.innerHTML = `💡 给<strong>${w}</strong>用<strong>${t}</strong>做一个<strong>${f}</strong>，发布为<strong>${p}</strong>`;
+      const final = `给${values.who}用${values.tool}做一个${values.feature}，发布为${values.platform}`;
+      resultEl.innerHTML = `💡 给<strong>${values.who}</strong>用<strong>${values.tool}</strong>做一个<strong>${values.feature}</strong>，发布为<strong>${values.platform}</strong>`;
       resultEl.classList.add('filled');
       actionsEl.style.display = 'flex';
-      generateBtn.disabled = false;
+      btn.disabled = false;
       resultEl._lastResult = final;
     };
 
-    publishBtn.onclick = () => publishIdea(resultEl._lastResult || '创意工厂组合结果', '创意工厂');
-    copyBtn.onclick = () => copyToClipboard(resultEl._lastResult || '', copyBtn);
+    publishBtn.onclick = function() {
+      publishIdea(resultEl._lastResult || '创意工厂组合结果', '创意工厂');
+    };
+    copyBtn.onclick = function() {
+      copyToClipboard(resultEl._lastResult || '');
+    };
   }
 });
