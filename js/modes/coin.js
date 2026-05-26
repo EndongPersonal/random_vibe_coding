@@ -15,7 +15,10 @@ App.register('coin', {
         <p id="coinPair" style="color:var(--text-dim);margin-bottom:16px;font-size:0.9rem;">${t('coinLoading')}</p>
         <button class="btn btn-primary" id="coinFlipBtn">${t('coinFlip')}</button>
         <div class="result-area" id="coinResult"></div>
-        <button class="publish-btn" id="coinPublishBtn" style="display:none;">${t('coinPublish')}</button>
+        <div class="result-actions" id="coinActions" style="display:none;">
+          <button class="copy-btn" id="coinCopyBtn">📋 复制</button>
+          <button class="publish-btn" id="coinPublishBtn">${t('coinPublish')}</button>
+        </div>
       </div>`;
   },
 
@@ -24,7 +27,9 @@ App.register('coin', {
     const pairEl = document.getElementById('coinPair');
     const flipBtn = document.getElementById('coinFlipBtn');
     const resultEl = document.getElementById('coinResult');
+    const actionsEl = document.getElementById('coinActions');
     const publishBtn = document.getElementById('coinPublishBtn');
+    const copyBtn = document.getElementById('coinCopyBtn');
     let currentPair = null;
     let currentResult = '';
 
@@ -33,9 +38,8 @@ App.register('coin', {
       pairEl.textContent = `${currentPair.a}   VS   ${currentPair.b}`;
     }
 
-    publishBtn.onclick = () => {
-      publishIdea(currentResult, '掷硬币');
-    };
+    publishBtn.onclick = () => publishIdea(currentResult, '掷硬币');
+    copyBtn.onclick = () => copyToClipboard(currentResult, copyBtn);
 
     flipBtn.onclick = async () => {
       if (!currentPair) pickPair();
@@ -45,7 +49,7 @@ App.register('coin', {
       flipBtn.disabled = true;
       resultEl.classList.remove('filled');
       resultEl.textContent = t('coinSpinning');
-      publishBtn.style.display = 'none';
+      actionsEl.style.display = 'none';
 
       const isHeads = Math.random() < 0.5;
       setTimeout(() => {
@@ -56,7 +60,7 @@ App.register('coin', {
       currentResult = isHeads ? currentPair.a : currentPair.b;
       resultEl.innerHTML = `🎯 <strong>${currentResult}</strong>`;
       resultEl.classList.add('filled');
-      publishBtn.style.display = 'inline-flex';
+      actionsEl.style.display = 'flex';
       flipBtn.disabled = false;
 
       setTimeout(pickPair, 800);

@@ -992,6 +992,68 @@ body {
   background: rgba(244,114,182,0.06);
 }
 
+/* ====== 复制按钮 ====== */
+.copy-btn {
+  display: inline-flex; align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 500;
+  transition: all 0.25s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.copy-btn:hover {
+  border-color: var(--accent2);
+  color: var(--accent2);
+  background: rgba(6,182,212,0.06);
+}
+
+.copy-btn.copied {
+  border-color: var(--green);
+  color: var(--green);
+  background: rgba(74,222,128,0.08);
+}
+
+.result-actions {
+  display: flex; align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+/* Trends 复制按钮 */
+.trends-copy {
+  display: flex; align-items: center;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: all 0.2s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.trends-copy:hover {
+  border-color: var(--accent2);
+  color: var(--accent2);
+}
+
+.trends-copy.copied {
+  color: var(--green);
+  border-color: var(--green);
+}
+
 /* ====== 滚动条美化 ====== */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }

@@ -18,7 +18,10 @@ App.register('dice', {
         </div>
         <button class="btn btn-primary" id="diceRollBtn">${t('diceRoll')}</button>
         <div class="result-area" id="diceResult"></div>
-        <button class="publish-btn" id="dicePublishBtn" style="display:none;">${t('coinPublish')}</button>
+        <div class="result-actions" id="diceActions" style="display:none;">
+          <button class="copy-btn" id="diceCopyBtn">📋 复制</button>
+          <button class="publish-btn" id="dicePublishBtn">${t('coinPublish')}</button>
+        </div>
       </div>`;
   },
 
@@ -26,15 +29,14 @@ App.register('dice', {
     const diceEl = document.getElementById('diceEl');
     const rollBtn = document.getElementById('diceRollBtn');
     const resultEl = document.getElementById('diceResult');
+    const actionsEl = document.getElementById('diceActions');
     const publishBtn = document.getElementById('dicePublishBtn');
+    const copyBtn = document.getElementById('diceCopyBtn');
 
     const faceRotations = [
-      'rotateX(0deg) rotateY(0deg)',
-      'rotateX(0deg) rotateY(90deg)',
-      'rotateX(-90deg) rotateY(0deg)',
-      'rotateX(90deg) rotateY(0deg)',
-      'rotateX(0deg) rotateY(-90deg)',
-      'rotateX(0deg) rotateY(180deg)',
+      'rotateX(0deg) rotateY(0deg)', 'rotateX(0deg) rotateY(90deg)',
+      'rotateX(-90deg) rotateY(0deg)', 'rotateX(90deg) rotateY(0deg)',
+      'rotateX(0deg) rotateY(-90deg)', 'rotateX(0deg) rotateY(180deg)',
     ];
 
     rollBtn.onclick = async () => {
@@ -44,28 +46,24 @@ App.register('dice', {
       diceEl.style.transition = 'transform 0.1s';
       diceEl.style.transform = 'rotateX(0deg) rotateY(0deg)';
       await delay(100);
-
       diceEl.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)';
       diceEl.style.transform = `rotateX(1080deg) rotateY(${720 + face * 90}deg)`;
       rollBtn.disabled = true;
       resultEl.classList.remove('filled');
       resultEl.textContent = t('diceRolling');
-      publishBtn.style.display = 'none';
+      actionsEl.style.display = 'none';
 
       await delay(900);
-
       diceEl.style.transition = 'transform 0.4s ease-out';
       diceEl.style.transform = faceRotations[face];
-
       resultEl.innerHTML = `🎯 <strong>${topic}</strong>`;
       resultEl.classList.add('filled');
-      publishBtn.style.display = 'inline-flex';
+      actionsEl.style.display = 'flex';
       rollBtn.disabled = false;
       diceEl._lastResult = topic;
     };
 
-    publishBtn.onclick = () => {
-      publishIdea(diceEl._lastResult || Topics.dice[0], '骰子');
-    };
+    publishBtn.onclick = () => publishIdea(diceEl._lastResult || Topics.dice[0], '骰子');
+    copyBtn.onclick = () => copyToClipboard(diceEl._lastResult || Topics.dice[0], copyBtn);
   }
 });

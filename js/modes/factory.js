@@ -33,22 +33,26 @@ App.register('factory', {
         <div class="factory-slots">${slotsHTML}</div>
         <button class="btn btn-primary" id="factoryGenerateBtn">${t('factoryGenerate')}</button>
         <div class="result-area factory-result" id="factoryResult"></div>
-        <button class="publish-btn" id="factoryPublishBtn" style="display:none;">${t('coinPublish')}</button>
+        <div class="result-actions" id="factoryActions" style="display:none;">
+          <button class="copy-btn" id="factoryCopyBtn">📋 复制</button>
+          <button class="publish-btn" id="factoryPublishBtn">${t('coinPublish')}</button>
+        </div>
       </div>`;
   },
 
   onActivate() {
     const generateBtn = document.getElementById('factoryGenerateBtn');
     const resultEl = document.getElementById('factoryResult');
+    const actionsEl = document.getElementById('factoryActions');
     const publishBtn = document.getElementById('factoryPublishBtn');
+    const copyBtn = document.getElementById('factoryCopyBtn');
     const slots = {};
 
     this.template.forEach(slot => {
       slots[slot.id] = {
         el: document.getElementById('slot-' + slot.id),
         select: document.querySelector(`[data-slot="${slot.id}"]`),
-        pool: slot.pool,
-        value: ''
+        pool: slot.pool, value: ''
       };
     });
 
@@ -59,40 +63,33 @@ App.register('factory', {
         case 'coin': const two = shuffle(pool).slice(0, 2); return Math.random() < 0.5 ? two[0] : two[1];
         case 'card': return randomPick(shuffle(pool).slice(0, 32));
         case 'iching': return pool[randomInt(0, 64) % pool.length];
-        case 'random': default: return randomPick(pool);
+        default: return randomPick(pool);
       }
     }
 
     generateBtn.onclick = async () => {
       generateBtn.disabled = true;
-      resultEl.classList.remove('filled');
-      resultEl.innerHTML = t('factoryGenerating');
-      publishBtn.style.display = 'none';
+      resultEl.classList.remove('filled'); resultEl.innerHTML = t('factoryGenerating');
+      actionsEl.style.display = 'none';
 
       for (const slot of this.template) {
         const s = slots[slot.id];
-        const mode = s.select.value;
-        s.value = pickWithMode(s.pool, mode);
+        s.value = pickWithMode(s.pool, s.select.value);
         s.el.textContent = s.value;
         s.el.classList.add('filled');
         await delay(200);
       }
 
-      const who = slots['who'].value;
-      const tool = slots['tool'].value;
-      const feat = slots['feature'].value;
-      const plat = slots['platform'].value;
-      const final = `给${who}用${tool}做一个${feat}，发布为${plat}`;
-
-      resultEl.innerHTML = `💡 给<strong>${who}</strong>用<strong>${tool}</strong>做一个<strong>${feat}</strong>，发布为<strong>${plat}</strong>`;
+      const w = slots['who'].value, t = slots['tool'].value, f = slots['feature'].value, p = slots['platform'].value;
+      const final = `给${w}用${t}做一个${f}，发布为${p}`;
+      resultEl.innerHTML = `💡 给<strong>${w}</strong>用<strong>${t}</strong>做一个<strong>${f}</strong>，发布为<strong>${p}</strong>`;
       resultEl.classList.add('filled');
-      publishBtn.style.display = 'inline-flex';
+      actionsEl.style.display = 'flex';
       generateBtn.disabled = false;
       resultEl._lastResult = final;
     };
 
-    publishBtn.onclick = () => {
-      publishIdea(resultEl._lastResult || '创意工厂组合结果', '创意工厂');
-    };
+    publishBtn.onclick = () => publishIdea(resultEl._lastResult || '创意工厂组合结果', '创意工厂');
+    copyBtn.onclick = () => copyToClipboard(resultEl._lastResult || '', copyBtn);
   }
 });

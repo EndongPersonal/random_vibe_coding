@@ -67,6 +67,7 @@ App.register('trends', {
                 <span>${formatTime(idea.time)}</span>
               </div>
             </div>
+            <button class="trends-copy" data-copy="${i}">📋</button>
             <button class="trends-heart${isLiked ? ' liked' : ''}" data-idx="${i}">
               ${isLiked ? '❤️' : '🤍'}
               <span class="trends-heart-count">${idea.likes}</span>
@@ -75,6 +76,19 @@ App.register('trends', {
         `;
       }).join('');
 
+      // 绑定复制
+      listEl.querySelectorAll('.trends-copy').forEach(btn => {
+        btn.onclick = () => {
+          const idx = parseInt(btn.dataset.copy);
+          const ideasForCopy = loadData('trends_ideas', []);
+          const sorted = [...ideasForCopy];
+          if (sortMode === 'hot') sorted.sort((a, b) => b.likes - a.likes);
+          else sorted.sort((a, b) => new Date(b.time) - new Date(a.time));
+          copyToClipboard(sorted[idx]?.content || '', btn);
+        };
+      });
+
+      // 绑定点赞
       listEl.querySelectorAll('.trends-heart').forEach(btn => {
         btn.onclick = () => {
           const idx = parseInt(btn.dataset.idx);

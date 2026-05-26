@@ -14,7 +14,10 @@ App.register('card', {
         </div>
         <button class="btn btn-primary" id="cardDrawBtn">${t('cardDraw')}</button>
         <div class="result-area" id="cardResult"></div>
-        <button class="publish-btn" id="cardPublishBtn" style="display:none;">${t('coinPublish')}</button>
+        <div class="result-actions" id="cardActions" style="display:none;">
+          <button class="copy-btn" id="cardCopyBtn">📋 复制</button>
+          <button class="publish-btn" id="cardPublishBtn">${t('coinPublish')}</button>
+        </div>
       </div>`;
   },
 
@@ -23,7 +26,9 @@ App.register('card', {
     const cardBack = document.getElementById('cardBack');
     const drawBtn = document.getElementById('cardDrawBtn');
     const resultEl = document.getElementById('cardResult');
+    const actionsEl = document.getElementById('cardActions');
     const publishBtn = document.getElementById('cardPublishBtn');
+    const copyBtn = document.getElementById('cardCopyBtn');
     let currentCard = '';
 
     cardItem.classList.add('flipped');
@@ -35,21 +40,17 @@ App.register('card', {
       cardBack.textContent = currentCard;
       cardItem.classList.add('flipped');
       drawBtn.disabled = true;
-      resultEl.classList.remove('filled');
-      resultEl.textContent = t('cardDrawing');
-      publishBtn.style.display = 'none';
-
+      resultEl.classList.remove('filled'); resultEl.textContent = t('cardDrawing');
+      actionsEl.style.display = 'none';
       await delay(700);
       resultEl.innerHTML = `🎯 <strong>${currentCard}</strong>`;
       resultEl.classList.add('filled');
-      publishBtn.style.display = 'inline-flex';
+      actionsEl.style.display = 'flex';
       drawBtn.disabled = false;
     };
 
-    publishBtn.onclick = () => {
-      publishIdea(currentCard, '抽卡');
-    };
-
+    publishBtn.onclick = () => publishIdea(currentCard, '抽卡');
+    copyBtn.onclick = () => copyToClipboard(currentCard, copyBtn);
     document.getElementById('cardDeck').onclick = () => drawBtn.click();
   }
 });

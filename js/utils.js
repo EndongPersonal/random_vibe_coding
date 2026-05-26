@@ -94,3 +94,32 @@ function saveData(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
   } catch { /* quota exceeded */ }
 }
+
+// 复制到剪贴板 (纯文本 + 视觉反馈)
+async function copyToClipboard(text, btn) {
+  try {
+    await navigator.clipboard.writeText(text);
+    if (btn) {
+      const orig = btn.textContent;
+      btn.textContent = '✓ ' + (I18n && I18n.current === 'en' ? 'Copied!' : '已复制');
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.classList.remove('copied');
+      }, 1500);
+    }
+  } catch {
+    // 降级方案
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    if (btn) {
+      btn.textContent = '✓';
+      setTimeout(() => { btn.textContent = '📋'; }, 1500);
+    }
+  }
+}
