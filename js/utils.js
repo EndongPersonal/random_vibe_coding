@@ -1,0 +1,96 @@
+// ============================================================
+// utils.js — 通用工具函数
+// ============================================================
+
+// 随机整数 [min, max)
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+// 从数组随机取一个元素
+function randomPick(arr) {
+  return arr[randomInt(0, arr.length)];
+}
+
+// 洗牌 (Fisher-Yates)
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = randomInt(0, i + 1);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// 延迟 (用于动画)
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// 获取今日日期字符串 YYYY-MM-DD
+function todayStr() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+// 获取今日日期字符串 (中文)
+function todayCN() {
+  const d = new Date();
+  return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+}
+
+// 获取星期几 (中文)
+function weekdayCN() {
+  const days = ['日', '一', '二', '三', '四', '五', '六'];
+  return '星期' + days[new Date().getDay()];
+}
+
+// 获取简单 hash (用于黄历每日变化)
+function simpleHash(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash);
+}
+
+// 基于日期种子的伪随机 (保证同一天结果一致)
+function seededRandom(seed) {
+  let s = simpleHash(seed);
+  return function() {
+    s = (s * 1103515245 + 12345) & 0x7fffffff;
+    return s / 0x7fffffff;
+  };
+}
+
+// 基于日期从数组选取 N 个固定元素
+function dailyPick(arr, n) {
+  const rng = seededRandom(todayStr());
+  const indices = arr.map((_, i) => ({ i, r: rng() }))
+    .sort((a, b) => a.r - b.r)
+    .slice(0, n)
+    .map(x => x.i)
+    .sort((a, b) => a - b);
+  return indices.map(i => arr[i]);
+}
+
+// 格式化日期时间
+function formatTime(iso) {
+  const d = new Date(iso);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
+
+// 读取 localStorage (带默认值)
+function loadData(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch { return fallback; }
+}
+
+// 写入 localStorage
+function saveData(key, data) {
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+  } catch { /* quota exceeded */ }
+}
