@@ -114,7 +114,11 @@ const I18n = {
       trendsSourceCoin: '掷硬币',
       trendsSourceWheel: '转盘',
       trendsSourceTree: '决策树',
-      trendsSourceIching: '梅花易数'
+      trendsSourceIching: '梅花易数',
+
+      // 电子钓鱼
+      navFishing: '🎣 电子钓鱼',
+      fishingSource: '电子钓鱼'
     },
 
     en: {
@@ -225,7 +229,11 @@ const I18n = {
       trendsSourceCoin: 'Coin Flip',
       trendsSourceWheel: 'Wheel',
       trendsSourceTree: 'Decision Tree',
-      trendsSourceIching: 'I Ching'
+      trendsSourceIching: 'I Ching',
+
+      // Fishing
+      navFishing: '🎣 Fishing',
+      fishingSource: 'Fishing'
     }
   },
 

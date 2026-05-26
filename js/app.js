@@ -57,7 +57,7 @@ const App = {
   // 重建所有面板
   rebuildPanels() {
     const main = document.getElementById('main');
-    const modeOrder = ['coin', 'dice', 'wheel', 'card', 'tree', 'iching', 'group', 'almanac', 'factory', 'trends'];
+    const modeOrder = ['coin', 'dice', 'wheel', 'card', 'tree', 'iching', 'group', 'almanac', 'factory', 'trends', 'fishing'];
 
     let currentActive = this.currentMode;
 
