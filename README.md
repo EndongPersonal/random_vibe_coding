@@ -95,6 +95,41 @@ proj_1/
 - [ ] 导出/分享 idea 为图片
 - [ ] 国际化支持更多语言
 
+### 🔥 灵感广场 · Trends 精选
+
+> 来自创意工厂、抽卡等模式的热门 idea，❤️ 点赞排名：
+
+| # | ❤️ | 灵感 Idea | 来源 |
+|---|-----|----------|------|
+| 1 | 42 | 给熬夜冠军用 **React** 做一个赛博朋克滤镜工具，发布为 Web 网页 | 🏭 创意工厂 |
+| 2 | 38 | 给猫奴用 **Canvas API** 做一个屏幕宠物 (桌面上走来走去的小动物)，发布为浏览器扩展 | 🏭 创意工厂 |
+| 3 | 35 | 给考研党用 **Python** 做一个自动整理文件夹的脚本，发布为命令行 CLI 工具 | 🏭 创意工厂 |
+| 4 | 31 | 给社恐用 **Three.js** 做一个模拟蚂蚁觅食行为的可视化，发布为 Web 网页 | 🏭 创意工厂 |
+| 5 | 29 | 给追星族用 **Telegram Bot** 做一个彩虹屁生成器，发布为 Telegram Bot | 🏭 创意工厂 |
+| 6 | 27 | 用纯 **CSS** 画一只会 wink 的猫 | 🃏 抽卡 |
+| 7 | 25 | 给打工人用 **Electron** 做一个摸鱼伪装页面 (一键切换成 Excel 界面)，发布为桌面应用 | 🏭 创意工厂 |
+| 8 | 24 | 实现一个什么都不做但很解压的按钮 | 🃏 抽卡 |
+| 9 | 22 | 给钓鱼佬用 **Arduino** 做一个天气查询工具，发布为 iOS App | 🏭 创意工厂 |
+| 10 | 20 | 给 MBTI 中毒者用 **D3.js** 做一个数据大屏，发布为 Web 网页 | 🏭 创意工厂 |
+
+<details>
+<summary>更多热门灵感 ...</summary>
+
+| # | ❤️ | 灵感 Idea | 来源 |
+|---|-----|----------|------|
+| 11 | 19 | 做一个敲键盘发出不同音效的网页 | 🃏 抽卡 |
+| 12 | 18 | 给拖延症晚期用 **Flask** 做一个习惯追踪工具，发布为 PWA 可安装应用 | 🏭 创意工厂 |
+| 13 | 17 | 实现一个网页端的 AI 算命 | 🃏 抽卡 |
+| 14 | 16 | 给 DND 跑团玩家用 **WebSocket** 做一个在线真心话大冒险 | 🏭 创意工厂 |
+| 15 | 15 | 给咖啡师用 **Stable Diffusion** 做一个像素风头像生成器，发布为微信小程序 | 🏭 创意工厂 |
+| 16 | 14 | 做一个今天吃什么决策器 | 🃏 抽卡 |
+| 17 | 13 | 给数字游民用 **Supabase** 搭建一个个人知识库 | 🏭 创意工厂 |
+| 18 | 12 | 写一个随机生成阴谋论的网站 | 🃏 抽卡 |
+| 19 | 11 | 给二次元用 **CSS 动画** 做一个万花筒效果，发布为 Vercel | 🏭 创意工厂 |
+| 20 | 10 | 做一个代码屎山 3D 可视化 (俯瞰你的 git history) | 🃏 抽卡 |
+
+</details>
+
 ---
 
 ## English <a id="english"></a>
@@ -182,6 +217,41 @@ proj_1/
 - [ ] Theme switching (more visual styles)
 - [ ] Export / share ideas as images
 - [ ] i18n support for more languages
+
+### 🔥 Trends · Hot Ideas
+
+> Community-voted ideas from Idea Factory, Card Draw, and more:
+
+| # | ❤️ | Idea | Source |
+|---|-----|------|--------|
+| 1 | 42 | Cyberpunk photo filter tool for **night owls** using **React**, as a web app | 🏭 Factory |
+| 2 | 38 | Desktop pet (a wandering animal) for **cat lovers** using **Canvas API**, as a browser extension | 🏭 Factory |
+| 3 | 35 | Auto file organizer script for **exam crammers** using **Python**, as a CLI tool | 🏭 Factory |
+| 4 | 31 | Ant colony foraging visualization for **introverts** using **Three.js**, as a web app | 🏭 Factory |
+| 5 | 29 | Compliment generator for **fangirls** using **Telegram Bot**, as a Telegram Bot | 🏭 Factory |
+| 6 | 27 | A winking cat drawn entirely in **Pure CSS** | 🃏 Card |
+| 7 | 25 | Slack-off disguise page (one-click Excel mode) for **office workers** using **Electron**, as a desktop app | 🏭 Factory |
+| 8 | 24 | A button that does absolutely nothing but feels deeply satisfying | 🃏 Card |
+| 9 | 22 | Weather checker for **anglers** using **Arduino**, as an iOS App | 🏭 Factory |
+| 10 | 20 | Data dashboard for **MBTI addicts** using **D3.js**, as a web app | 🏭 Factory |
+
+<details>
+<summary>More hot ideas ...</summary>
+
+| # | ❤️ | Idea | Source |
+|---|-----|------|--------|
+| 11 | 19 | A webpage that makes fun sounds when you type | 🃏 Card |
+| 12 | 18 | Habit tracker for **procrastinators** using **Flask**, as a PWA | 🏭 Factory |
+| 13 | 17 | Web-based AI fortune teller | 🃏 Card |
+| 14 | 16 | Truth or Dare for **D&D players** using **WebSocket**, as a web app | 🏭 Factory |
+| 15 | 15 | Pixel avatar generator for **baristas** using **Stable Diffusion**, as a WeChat Mini Program | 🏭 Factory |
+| 16 | 14 | A "what should I eat today" decider | 🃏 Card |
+| 17 | 13 | Personal knowledge base for **digital nomads** using **Supabase** | 🏭 Factory |
+| 18 | 12 | A random conspiracy theory generator website | 🃏 Card |
+| 19 | 11 | Kaleidoscope effect for **anime fans** using **CSS Animations**, deployed on Vercel | 🏭 Factory |
+| 20 | 10 | 3D codebase visualization (fly over your git history) | 🃏 Card |
+
+</details>
 
 ---
 
