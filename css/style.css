@@ -971,7 +971,7 @@ body {
 
 /* ====== 发布按钮 ====== */
 .publish-btn {
-  margin-top: 14px;
+  margin: 0;
   display: inline-flex; align-items: center;
   gap: 6px;
   padding: 8px 20px;
@@ -984,6 +984,7 @@ body {
   font-weight: 500;
   transition: all 0.25s;
   font-family: inherit;
+  line-height: 1;
 }
 
 .publish-btn:hover {
@@ -996,17 +997,18 @@ body {
 .copy-btn {
   display: inline-flex; align-items: center;
   gap: 4px;
-  padding: 6px 14px;
+  padding: 8px 16px;
   border: 1px solid var(--border);
   border-radius: var(--radius-full);
   background: transparent;
   color: var(--text-dim);
   cursor: pointer;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 500;
   transition: all 0.25s;
   font-family: inherit;
   white-space: nowrap;
+  line-height: 1;
 }
 
 .copy-btn:hover {
