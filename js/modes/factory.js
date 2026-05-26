@@ -60,7 +60,10 @@ App.register('factory', {
       switch (mode) {
         case 'dice': return randomPick(shuffle(pool).slice(0, 6));
         case 'wheel': return randomPick(shuffle(pool).slice(0, 8));
-        case 'coin': const two = shuffle(pool).slice(0, 2); return Math.random() < 0.5 ? two[0] : two[1];
+        case 'coin': {
+          const two = shuffle(pool).slice(0, 2);
+          return Math.random() < 0.5 ? two[0] : two[1];
+        }
         case 'card': return randomPick(shuffle(pool).slice(0, 32));
         case 'iching': return pool[randomInt(0, 64) % pool.length];
         default: return randomPick(pool);
