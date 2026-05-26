@@ -11,18 +11,16 @@ App.register('almanac', {
         </div>
         <div class="almanac-grid">
           <div class="almanac-col good">
-            <h3>✅ 今日宜</h3>
+            <h3>${t('almanacGood')}</h3>
             <ul id="almanacGood"></ul>
           </div>
           <div class="almanac-col bad">
-            <h3>❌ 今日忌</h3>
+            <h3>${t('almanacBad')}</h3>
             <ul id="almanacBad"></ul>
           </div>
         </div>
-        <button class="btn btn-primary" id="almanacRefreshBtn" style="margin-top:16px;">🔮 再看一天</button>
-        <p style="color:var(--text-dim);font-size:0.75rem;margin-top:8px;">
-          基于日期种子生成，同一天结果一致
-        </p>
+        <button class="btn btn-primary" id="almanacRefreshBtn" style="margin-top:16px;">${t('almanacRefresh')}</button>
+        <p style="color:var(--text-dim);font-size:0.75rem;margin-top:8px;">${t('almanacNote')}</p>
       </div>`;
   },
 
@@ -36,11 +34,9 @@ App.register('almanac', {
       let goodItems, badItems;
 
       if (useRandom) {
-        // 随机模式
         goodItems = shuffle(Topics.almanac.good).slice(0, 5);
         badItems = shuffle(Topics.almanac.bad).slice(0, 5);
       } else {
-        // 基于日期种子
         goodItems = dailyPick(Topics.almanac.good, 5);
         badItems = dailyPick(Topics.almanac.bad, 5);
       }
@@ -54,7 +50,6 @@ App.register('almanac', {
     refreshBtn.onclick = () => {
       useRandom = true;
       render();
-      // 切回日期模式
       setTimeout(() => { useRandom = false; }, 3000);
     };
   }

@@ -16,11 +16,9 @@ App.register('dice', {
             <div class="dice-face dice-bottom">4</div>
           </div>
         </div>
-        <button class="btn btn-primary" id="diceRollBtn">🎲 掷骰子</button>
+        <button class="btn btn-primary" id="diceRollBtn">${t('diceRoll')}</button>
         <div class="result-area" id="diceResult"></div>
-        <button class="publish-btn" id="dicePublishBtn" style="display:none;">
-          📤 发布到 Trends
-        </button>
+        <button class="publish-btn" id="dicePublishBtn" style="display:none;">${t('coinPublish')}</button>
       </div>`;
   },
 
@@ -31,34 +29,31 @@ App.register('dice', {
     const publishBtn = document.getElementById('dicePublishBtn');
 
     const faceRotations = [
-      'rotateX(0deg) rotateY(0deg)',           // 1
-      'rotateX(0deg) rotateY(90deg)',           // 2
-      'rotateX(-90deg) rotateY(0deg)',          // 3
-      'rotateX(90deg) rotateY(0deg)',           // 4
-      'rotateX(0deg) rotateY(-90deg)',          // 5
-      'rotateX(0deg) rotateY(180deg)',          // 6
+      'rotateX(0deg) rotateY(0deg)',
+      'rotateX(0deg) rotateY(90deg)',
+      'rotateX(-90deg) rotateY(0deg)',
+      'rotateX(90deg) rotateY(0deg)',
+      'rotateX(0deg) rotateY(-90deg)',
+      'rotateX(0deg) rotateY(180deg)',
     ];
 
     rollBtn.onclick = async () => {
       const face = randomInt(0, 6);
       const topic = Topics.dice[face];
 
-      // 先动画回正
       diceEl.style.transition = 'transform 0.1s';
       diceEl.style.transform = 'rotateX(0deg) rotateY(0deg)';
       await delay(100);
 
-      // 滚动动画 + 结果
       diceEl.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)';
       diceEl.style.transform = `rotateX(1080deg) rotateY(${720 + face * 90}deg)`;
       rollBtn.disabled = true;
       resultEl.classList.remove('filled');
-      resultEl.textContent = '滚动中...';
+      resultEl.textContent = t('diceRolling');
       publishBtn.style.display = 'none';
 
       await delay(900);
 
-      // 精确停在结果面
       diceEl.style.transition = 'transform 0.4s ease-out';
       diceEl.style.transform = faceRotations[face];
 
@@ -66,15 +61,11 @@ App.register('dice', {
       resultEl.classList.add('filled');
       publishBtn.style.display = 'inline-flex';
       rollBtn.disabled = false;
-
-      // 保存用于发布
       diceEl._lastResult = topic;
     };
 
-    // 发布按钮
     publishBtn.onclick = () => {
-      const text = diceEl._lastResult || Topics.dice[0];
-      publishIdea(text, '骰子');
+      publishIdea(diceEl._lastResult || Topics.dice[0], '骰子');
     };
   }
 });

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,24 +8,31 @@
 </head>
 <body>
 
+  <!-- Top Bar: Theme + Language -->
+  <div class="topbar" id="topbar">
+    <button data-action="theme" id="btnTheme" data-i18n="themeDark">🌙 暗色</button>
+    <button data-action="lang" data-lang="zh" class="active" data-i18n="langZH">中文</button>
+    <button data-action="lang" data-lang="en" data-i18n="langEN">English</button>
+  </div>
+
   <!-- Header -->
   <header class="header">
     <h1>Vibe Coding Roller</h1>
-    <p class="subtitle">随机决策 · 灵感生成 · 今天写什么？</p>
+    <p class="subtitle" data-i18n="subtitle">随机决策 · 灵感生成 · 今天写什么？</p>
   </header>
 
   <!-- Mode Navigation -->
   <nav class="nav" id="nav">
-    <button class="nav-btn active" data-mode="coin">🪙 掷硬币</button>
-    <button class="nav-btn" data-mode="dice">🎲 骰子</button>
-    <button class="nav-btn" data-mode="wheel">🎡 转盘</button>
-    <button class="nav-btn" data-mode="card">🃏 抽卡</button>
-    <button class="nav-btn" data-mode="tree">🌳 决策树</button>
-    <button class="nav-btn" data-mode="iching">☯ 梅花易数</button>
-    <button class="nav-btn" data-mode="group">👥 分组</button>
-    <button class="nav-btn" data-mode="almanac">📅 黄历</button>
-    <button class="nav-btn" data-mode="factory">🏭 创意工厂</button>
-    <button class="nav-btn" data-mode="trends">🔥 Trends</button>
+    <button class="nav-btn active" data-mode="coin" data-i18n="navCoin">🪙 掷硬币</button>
+    <button class="nav-btn" data-mode="dice" data-i18n="navDice">🎲 骰子</button>
+    <button class="nav-btn" data-mode="wheel" data-i18n="navWheel">🎡 转盘</button>
+    <button class="nav-btn" data-mode="card" data-i18n="navCard">🃏 抽卡</button>
+    <button class="nav-btn" data-mode="tree" data-i18n="navTree">🌳 决策树</button>
+    <button class="nav-btn" data-mode="iching" data-i18n="navIching">☯ 梅花易数</button>
+    <button class="nav-btn" data-mode="group" data-i18n="navGroup">👥 分组</button>
+    <button class="nav-btn" data-mode="almanac" data-i18n="navAlmanac">📅 黄历</button>
+    <button class="nav-btn" data-mode="factory" data-i18n="navFactory">🏭 创意工厂</button>
+    <button class="nav-btn" data-mode="trends" data-i18n="navTrends">🔥 Trends</button>
   </nav>
 
   <!-- Main Content -->
@@ -36,6 +43,7 @@
   <!-- Scripts -->
   <script src="js/topics.js"></script>
   <script src="js/utils.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/app.js"></script>
   <script src="js/modes/coin.js"></script>
   <script src="js/modes/dice.js"></script>

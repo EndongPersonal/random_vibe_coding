@@ -1,20 +1,12 @@
 // ============================================================
 // trends.js — 灵感 Trends 模式
-// 发布想法 + ❤️点赞 + 排行榜
 // ============================================================
 
-// 全局发布函数 (供其他模式调用)
 function publishIdea(content, source) {
   const ideas = loadData('trends_ideas', []);
-  ideas.unshift({
-    content,
-    source,
-    likes: 0,
-    time: new Date().toISOString()
-  });
+  ideas.unshift({ content, source, likes: 0, time: new Date().toISOString() });
   saveData('trends_ideas', ideas);
 
-  // 如果 Trends 面板已渲染，刷新
   const panel = document.getElementById('panel-trends');
   if (panel && panel.classList.contains('active')) {
     App.switchMode('trends');
@@ -26,13 +18,12 @@ App.register('trends', {
     return `
       <div class="card" id="trendsCard">
         <div class="trends-tabs">
-          <button class="trends-tab active" data-sort="hot">🔥 热门</button>
-          <button class="trends-tab" data-sort="new">🕐 最新</button>
+          <button class="trends-tab active" data-sort="hot">${t('trendsHot')}</button>
+          <button class="trends-tab" data-sort="new">${t('trendsNew')}</button>
         </div>
         <div class="trends-list" id="trendsList"></div>
         <p style="text-align:center;margin-top:16px;color:var(--text-dim);font-size:0.8rem;">
-          💡 在其他模式生成后点击「发布到 Trends」即可投稿<br>
-          📊 数据存储在本地浏览器，暂不支持跨设备同步
+          ${t('trendsNote')}<br>${t('trendsNote2')}
         </p>
       </div>`;
   },
@@ -45,7 +36,6 @@ App.register('trends', {
     function loadIdeas() {
       let ideas = loadData('trends_ideas', []);
 
-      // 如果本地没有数据，用种子数据
       if (ideas.length === 0) {
         ideas = Topics.seedIdeas.map(s => ({
           ...s,
@@ -54,7 +44,6 @@ App.register('trends', {
         saveData('trends_ideas', ideas);
       }
 
-      // 读取点赞状态
       const liked = loadData('trends_liked', {});
 
       if (sortMode === 'hot') {
@@ -86,14 +75,12 @@ App.register('trends', {
         `;
       }).join('');
 
-      // 绑定点赞事件
       listEl.querySelectorAll('.trends-heart').forEach(btn => {
         btn.onclick = () => {
           const idx = parseInt(btn.dataset.idx);
           const ideas = loadData('trends_ideas', []);
           const liked = loadData('trends_liked', {});
 
-          // 用相同方式排序以匹配渲染时的索引
           const sorted = [...ideas];
           if (sortMode === 'hot') {
             sorted.sort((a, b) => b.likes - a.likes);
@@ -104,7 +91,6 @@ App.register('trends', {
           const idea = sorted[idx];
           if (!idea) return;
 
-          // 在原始数组中查找并更新
           const origIdx = ideas.findIndex(i => i.content === idea.content && i.time === idea.time);
           if (origIdx === -1) return;
 
@@ -123,7 +109,6 @@ App.register('trends', {
       });
     }
 
-    // 排序切换
     tabs.forEach(tab => {
       tab.onclick = () => {
         tabs.forEach(t => t.classList.remove('active'));
@@ -136,10 +121,3 @@ App.register('trends', {
     loadIdeas();
   }
 });
-
-// HTML 转义 (防止 XSS)
-function escapeHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
-}

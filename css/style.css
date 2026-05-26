@@ -1,9 +1,10 @@
 /* ============================================================
    style.css — Vibe Coding Roller 全局样式
-   暗色主题 + 霓虹渐变 + 响应式
+   暗色/亮色主题 + 霓虹渐变 + 响应式
    ============================================================ */
 
-:root {
+/* 暗色主题 (默认) */
+:root, [data-theme="dark"] {
   --bg: #0a0a1a;
   --bg-card: #12122a;
   --bg-card-hover: #1a1a3a;
@@ -17,8 +18,31 @@
   --neon-green: #4dff88;
   --neon-yellow: #ffdd4d;
   --border: #2a2a4a;
+  --input-bg: #0a0a1a;
+  --shadow: rgba(168,85,247,0.15);
+  --glow: rgba(168,85,247,0.3);
   --radius: 12px;
   --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* 亮色主题 */
+[data-theme="light"] {
+  --bg: #f0f0f5;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8f8fd;
+  --text: #1a1a2e;
+  --text-dim: #7777aa;
+  --accent: #8b5cf6;
+  --accent2: #0891b2;
+  --accent3: #ea580c;
+  --neon-pink: #e11d8e;
+  --neon-blue: #2563eb;
+  --neon-green: #16a34a;
+  --neon-yellow: #ca8a04;
+  --border: #d4d4e0;
+  --input-bg: #f8f8fd;
+  --shadow: rgba(139,92,246,0.08);
+  --glow: rgba(139,92,246,0.2);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,6 +53,7 @@ html, body {
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
 }
 
 /* 背景动态效果 */
@@ -37,11 +62,47 @@ body::before {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse at 20% 0%, rgba(168,85,247,0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 100%, rgba(6,182,212,0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(249,115,22,0.04) 0%, transparent 60%);
+    radial-gradient(ellipse at 20% 0%, var(--accent) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, var(--accent2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, var(--accent3) 0%, transparent 60%);
+  opacity: 0.06;
   pointer-events: none;
   z-index: 0;
+}
+
+/* ============================
+   Top Bar (theme/lang toggle)
+   ============================ */
+.topbar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 10px 20px 0;
+}
+
+.topbar button {
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg-card);
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.78rem;
+  transition: all 0.2s;
+  font-family: var(--font);
+}
+
+.topbar button:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.topbar button.active {
+  background: var(--accent);
+  border-color: transparent;
+  color: #fff;
 }
 
 /* ============================
@@ -51,7 +112,7 @@ body::before {
   position: relative;
   z-index: 1;
   text-align: center;
-  padding: 40px 20px 20px;
+  padding: 20px 20px 16px;
 }
 
 .header h1 {
@@ -114,7 +175,7 @@ body::before {
   border-color: transparent;
   color: #fff;
   font-weight: 600;
-  box-shadow: 0 0 20px rgba(168,85,247,0.3);
+  box-shadow: 0 0 20px var(--glow);
 }
 
 /* ============================
@@ -154,6 +215,7 @@ body::before {
   border-radius: var(--radius);
   padding: 32px;
   text-align: center;
+  box-shadow: 0 4px 24px var(--shadow);
 }
 
 /* ============================
@@ -177,11 +239,11 @@ body::before {
 
 .btn-primary {
   background: linear-gradient(135deg, var(--accent), var(--neon-pink));
-  box-shadow: 0 0 20px rgba(168,85,247,0.3);
+  box-shadow: 0 0 20px var(--glow);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 0 30px rgba(168,85,247,0.5);
+  box-shadow: 0 0 30px var(--glow);
   transform: translateY(-1px);
 }
 
@@ -200,14 +262,20 @@ body::before {
   font-size: 0.85rem;
 }
 
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
 /* ============================
    Result Area
    ============================ */
 .result-area {
   margin-top: 24px;
   padding: 24px;
-  background: rgba(168,85,247,0.08);
-  border: 1px solid rgba(168,85,247,0.2);
+  background: var(--input-bg);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   min-height: 60px;
   display: flex;
@@ -220,8 +288,8 @@ body::before {
 }
 
 .result-area.filled {
-  background: rgba(168,85,247,0.12);
   border-color: var(--accent);
+  box-shadow: 0 0 16px var(--shadow);
 }
 
 /* ============================
@@ -349,7 +417,7 @@ body::before {
   height: 100%;
   border-radius: 50%;
   transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
-  box-shadow: 0 0 40px rgba(168,85,247,0.3), inset 0 0 20px rgba(0,0,0,0.3);
+  box-shadow: 0 0 40px var(--glow), inset 0 0 20px rgba(0,0,0,0.2);
 }
 
 .wheel-pointer {
@@ -495,13 +563,13 @@ body::before {
 
 .almanac-col.good li {
   background: rgba(77,255,136,0.1);
-  border: 1px solid rgba(77,255,136,0.2);
+  border: 1px solid rgba(77,255,136,0.25);
   color: var(--neon-green);
 }
 
 .almanac-col.bad li {
   background: rgba(255,77,166,0.1);
-  border: 1px solid rgba(255,77,166,0.2);
+  border: 1px solid rgba(255,77,166,0.25);
   color: var(--neon-pink);
 }
 
@@ -525,14 +593,14 @@ body::before {
 .factory-label {
   font-size: 0.85rem;
   color: var(--text-dim);
-  min-width: 60px;
+  min-width: 70px;
 }
 
 .factory-slot {
   flex: 1;
   min-width: 140px;
   padding: 10px 16px;
-  background: var(--bg);
+  background: var(--input-bg);
   border: 1px dashed var(--border);
   border-radius: 8px;
   color: var(--accent);
@@ -546,7 +614,6 @@ body::before {
 .factory-slot.filled {
   border-style: solid;
   border-color: var(--accent);
-  background: rgba(168,85,247,0.1);
   color: var(--text);
 }
 
@@ -567,7 +634,7 @@ body::before {
   padding: 20px;
 }
 
-.factory-result span {
+.factory-result strong {
   color: var(--accent);
   font-weight: 700;
 }
@@ -579,7 +646,7 @@ body::before {
   width: 100%;
   min-height: 80px;
   padding: 12px;
-  background: var(--bg);
+  background: var(--input-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   color: var(--text);
@@ -600,7 +667,7 @@ body::before {
 .group-count input {
   width: 60px;
   padding: 8px;
-  background: var(--bg);
+  background: var(--input-bg);
   border: 1px solid var(--border);
   border-radius: 8px;
   color: var(--text);
@@ -617,8 +684,8 @@ body::before {
 }
 
 .group-col {
-  background: rgba(168,85,247,0.08);
-  border: 1px solid rgba(168,85,247,0.2);
+  background: var(--input-bg);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 12px;
 }
@@ -684,8 +751,8 @@ body::before {
 .tree-breadcrumb {
   padding: 4px 12px;
   border-radius: 12px;
-  background: rgba(168,85,247,0.15);
-  border: 1px solid rgba(168,85,247,0.3);
+  background: rgba(168,85,247,0.1);
+  border: 1px solid rgba(168,85,247,0.25);
   font-size: 0.8rem;
   color: var(--accent);
 }
@@ -736,7 +803,7 @@ body::before {
 }
 
 .trends-item:hover {
-  border-color: rgba(255,77,166,0.3);
+  border-color: var(--neon-pink);
   background: var(--bg-card-hover);
 }
 
@@ -760,7 +827,7 @@ body::before {
   display: inline-block;
   padding: 2px 10px;
   border-radius: 10px;
-  background: rgba(168,85,247,0.15);
+  background: rgba(168,85,247,0.12);
   color: var(--accent);
   font-size: 0.75rem;
   margin-right: 8px;
@@ -832,7 +899,8 @@ body::before {
    Responsive
    ============================ */
 @media (max-width: 600px) {
-  .header { padding: 24px 16px 12px; }
+  .topbar { padding: 8px 12px 0; }
+  .header { padding: 16px 16px 10px; }
   .nav { padding: 8px 12px 12px; gap: 6px; }
   .nav-btn { padding: 6px 12px; font-size: 0.75rem; }
   .card { padding: 20px; }

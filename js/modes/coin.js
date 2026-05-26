@@ -12,12 +12,10 @@ App.register('coin', {
             <div class="coin-side coin-tails">反</div>
           </div>
         </div>
-        <p id="coinPair" style="color:var(--text-dim);margin-bottom:16px;font-size:0.9rem;">加载中...</p>
-        <button class="btn btn-primary" id="coinFlipBtn">🪙 抛硬币</button>
+        <p id="coinPair" style="color:var(--text-dim);margin-bottom:16px;font-size:0.9rem;">${t('coinLoading')}</p>
+        <button class="btn btn-primary" id="coinFlipBtn">${t('coinFlip')}</button>
         <div class="result-area" id="coinResult"></div>
-        <button class="publish-btn" id="coinPublishBtn" style="display:none;">
-          📤 发布到 Trends
-        </button>
+        <button class="publish-btn" id="coinPublishBtn" style="display:none;">${t('coinPublish')}</button>
       </div>`;
   },
 
@@ -46,12 +44,10 @@ App.register('coin', {
       coinEl.classList.add('flipping');
       flipBtn.disabled = true;
       resultEl.classList.remove('filled');
-      resultEl.textContent = '旋转中...';
+      resultEl.textContent = t('coinSpinning');
       publishBtn.style.display = 'none';
 
       const isHeads = Math.random() < 0.5;
-      const face = isHeads ? 'heads' : 'tails';
-
       setTimeout(() => {
         coinEl.style.transform = isHeads ? 'rotateY(1440deg)' : 'rotateY(1620deg)';
       }, 300);
@@ -63,7 +59,6 @@ App.register('coin', {
       publishBtn.style.display = 'inline-flex';
       flipBtn.disabled = false;
 
-      // 下次再抛换一组
       setTimeout(pickPair, 800);
     };
 

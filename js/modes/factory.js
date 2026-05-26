@@ -1,26 +1,27 @@
 // ============================================================
 // factory.js — 创意工厂模式
-// 每个空位可以自选不同的随机模式来填充
 // ============================================================
 
 App.register('factory', {
-  // 模板定义
   template: [
-    { id: 'who', label: '给', pool: Topics.users, result: '' },
-    { id: 'tool', label: '用', pool: Topics.tools, result: '' },
-    { id: 'feature', label: '做一个', pool: Topics.features, result: '' },
-    { id: 'platform', label: '发布为', pool: Topics.platforms, result: '' }
+    { id: 'who', labelKey: 'factoryLabelWho', pool: Topics.users, result: '' },
+    { id: 'tool', labelKey: 'factoryLabelTool', pool: Topics.tools, result: '' },
+    { id: 'feature', labelKey: 'factoryLabelFeature', pool: Topics.features, result: '' },
+    { id: 'platform', labelKey: 'factoryLabelPlatform', pool: Topics.platforms, result: '' }
   ],
 
   render() {
-    const modeOptions = ['random', 'dice', 'wheel', 'coin', 'card', 'iching'];
-    const modeLabels = { random: '纯随机', dice: '骰子式', wheel: '转盘式', coin: '硬币式', card: '抽卡式', iching: '卦象式' };
+    const modeOpts = ['random', 'dice', 'wheel', 'coin', 'card', 'iching'];
+    const modeKeys = {
+      random: 'factoryModeRandom', dice: 'factoryModeDice', wheel: 'factoryModeWheel',
+      coin: 'factoryModeCoin', card: 'factoryModeCard', iching: 'factoryModeIching'
+    };
 
     const slotsHTML = this.template.map(t => `
       <div class="factory-row">
-        <span class="factory-label">${t.label}</span>
+        <span class="factory-label">${t(t.labelKey)}</span>
         <select class="factory-mode-select" data-slot="${t.id}">
-          ${modeOptions.map(m => `<option value="${m}">${modeLabels[m]}</option>`).join('')}
+          ${modeOpts.map(m => `<option value="${m}">${t(modeKeys[m])}</option>`).join('')}
         </select>
         <div class="factory-slot" id="slot-${t.id}">?</div>
       </div>
@@ -28,17 +29,11 @@ App.register('factory', {
 
     return `
       <div class="card">
-        <p style="color:var(--text-dim);margin-bottom:16px;font-size:0.9rem;">
-          每个空位可选不同模式填充，组合出完整创意
-        </p>
-        <div class="factory-slots">
-          ${slotsHTML}
-        </div>
-        <button class="btn btn-primary" id="factoryGenerateBtn">🎰 一键生成</button>
+        <p style="color:var(--text-dim);margin-bottom:16px;font-size:0.9rem;">${t('factoryHint')}</p>
+        <div class="factory-slots">${slotsHTML}</div>
+        <button class="btn btn-primary" id="factoryGenerateBtn">${t('factoryGenerate')}</button>
         <div class="result-area factory-result" id="factoryResult"></div>
-        <button class="publish-btn" id="factoryPublishBtn" style="display:none;">
-          📤 发布到 Trends
-        </button>
+        <button class="publish-btn" id="factoryPublishBtn" style="display:none;">${t('coinPublish')}</button>
       </div>`;
   },
 
@@ -48,7 +43,6 @@ App.register('factory', {
     const publishBtn = document.getElementById('factoryPublishBtn');
     const slots = {};
 
-    // 获取每个空位当前选中的模式
     this.template.forEach(t => {
       slots[t.id] = {
         el: document.getElementById('slot-' + t.id),
@@ -60,36 +54,21 @@ App.register('factory', {
 
     function pickWithMode(pool, mode) {
       switch (mode) {
-        case 'dice':
-          // 骰子式：从池中取 6 个候选模拟骰子
-          return randomPick(shuffle(pool).slice(0, 6));
-        case 'wheel':
-          // 转盘式：从池中取 8 个候选模拟转盘
-          return randomPick(shuffle(pool).slice(0, 8));
-        case 'coin':
-          // 硬币式：从池中取 2 个候选二选一
-          const two = shuffle(pool).slice(0, 2);
-          return Math.random() < 0.5 ? two[0] : two[1];
-        case 'card':
-          // 抽卡式：纯随机抽一张
-          return randomPick(shuffle(pool).slice(0, 32));
-        case 'iching':
-          // 卦象式：用 64 卦映射到池索引
-          const hexIdx = randomInt(0, 64);
-          return pool[hexIdx % pool.length];
-        case 'random':
-        default:
-          return randomPick(pool);
+        case 'dice': return randomPick(shuffle(pool).slice(0, 6));
+        case 'wheel': return randomPick(shuffle(pool).slice(0, 8));
+        case 'coin': const two = shuffle(pool).slice(0, 2); return Math.random() < 0.5 ? two[0] : two[1];
+        case 'card': return randomPick(shuffle(pool).slice(0, 32));
+        case 'iching': return pool[randomInt(0, 64) % pool.length];
+        case 'random': default: return randomPick(pool);
       }
     }
 
     generateBtn.onclick = async () => {
       generateBtn.disabled = true;
       resultEl.classList.remove('filled');
-      resultEl.innerHTML = '生成中...';
+      resultEl.innerHTML = t('factoryGenerating');
       publishBtn.style.display = 'none';
 
-      // 逐个填充空位（带延迟动画效果）
       for (const t of this.template) {
         const s = slots[t.id];
         const mode = s.select.value;
@@ -99,15 +78,17 @@ App.register('factory', {
         await delay(200);
       }
 
-      // 组装最终结果
-      const final = `给<strong>${slots['who'].value}</strong>用<strong>${slots['tool'].value}</strong>做一个<strong>${slots['feature'].value}</strong>，发布为<strong>${slots['platform'].value}</strong>`;
+      const who = slots['who'].value;
+      const tool = slots['tool'].value;
+      const feat = slots['feature'].value;
+      const plat = slots['platform'].value;
+      const final = `给${who}用${tool}做一个${feat}，发布为${plat}`;
 
-      resultEl.innerHTML = `💡 ${final}`;
+      resultEl.innerHTML = `💡 给<strong>${who}</strong>用<strong>${tool}</strong>做一个<strong>${feat}</strong>，发布为<strong>${plat}</strong>`;
       resultEl.classList.add('filled');
       publishBtn.style.display = 'inline-flex';
       generateBtn.disabled = false;
-
-      resultEl._lastResult = `给${slots['who'].value}用${slots['tool'].value}做一个${slots['feature'].value}，发布为${slots['platform'].value}`;
+      resultEl._lastResult = final;
     };
 
     publishBtn.onclick = () => {

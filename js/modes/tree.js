@@ -3,41 +3,27 @@
 // ============================================================
 
 App.register('tree', {
-  // 决策树结构
-  tree: {
-    question: '先选大方向？',
-    options: [
-      {
-        label: '写游戏',
-        result: '今天做一个游戏项目！可以是文字冒险、贪吃蛇、扫雷、2048、迷宫...任你发挥'
-      },
-      {
-        label: '做可视化',
-        result: '今天做可视化！粒子动画、数据大屏、音乐可视化、分形图形...视觉盛宴搞起来'
-      },
-      {
-        label: '搭服务',
-        result: '今天搭后端/API服务！REST API、GraphQL、WebSocket...或者做个Bot、写个自动化脚本'
-      },
-      {
-        label: '搞前端',
-        result: '今天搞前端页面！CSS动画、Canvas画布、WebGL...或者做一个纯粹的交互体验'
-      },
-      {
-        label: '学东西',
-        question: '学什么方向？',
-        options: [
-          { label: '新语言', result: '今天学一门新编程语言！Rust、Go、Elixir...挑一个没试过的' },
-          { label: '新框架', result: '今天学个新框架！Svelte、Astro、SolidJS...或者后端框架如FastAPI、Gin' },
-          { label: 'AI相关', result: '今天学AI！LangChain、RAG、Agent、Prompt Engineering...跟一波AI浪潮' },
-          { label: '读源码', result: '今天静心读源码！找个你常用的开源库，看看它是怎么实现的' }
-        ]
-      },
-      {
-        label: '随便',
-        result: '今天随缘写代码！打开编辑器，想到什么写什么，享受纯粹的 coding 快乐'
-      }
-    ]
+  getTree() {
+    return {
+      question: t('treeTitle'),
+      options: [
+        { label: t('treeGame'), result: t('treeGameR') },
+        { label: t('treeVis'), result: t('treeVisR') },
+        { label: t('treeApi'), result: t('treeApiR') },
+        { label: t('treeFront'), result: t('treeFrontR') },
+        {
+          label: t('treeLearn'),
+          question: t('treeLearnQ'),
+          options: [
+            { label: t('treeLang'), result: t('treeLangR') },
+            { label: t('treeFramework'), result: t('treeFrameworkR') },
+            { label: t('treeAI'), result: t('treeAIR') },
+            { label: t('treeSource'), result: t('treeSourceR') }
+          ]
+        },
+        { label: t('treeRandom'), result: t('treeRandomR') }
+      ]
+    };
   },
 
   render() {
@@ -46,9 +32,7 @@ App.register('tree', {
         <div class="tree-path" id="treePath"></div>
         <div class="tree-node" id="treeNode"></div>
         <div class="result-area" id="treeResult"></div>
-        <button class="publish-btn" id="treePublishBtn" style="display:none;">
-          📤 发布到 Trends
-        </button>
+        <button class="publish-btn" id="treePublishBtn" style="display:none;">${t('coinPublish')}</button>
       </div>`;
   },
 
@@ -92,16 +76,15 @@ App.register('tree', {
       });
     }
 
-    // 重置
     breadcrumbs.length = 0;
     pathEl.innerHTML = '';
     resultEl.classList.remove('filled');
     resultEl.innerHTML = '';
     publishBtn.style.display = 'none';
-    renderNode(this.tree);
+    renderNode(this.getTree());
 
     publishBtn.onclick = () => {
-      publishIdea(publishBtn._lastResult || '决策树结果', '决策树');
+      publishIdea(publishBtn._lastResult || 'Decision tree result', '决策树');
     };
   }
 });
