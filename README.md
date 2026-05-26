@@ -97,8 +97,6 @@ proj_1/
 
 ### 🔥 灵感广场 · Trends 精选
 
-![Trends Screenshot](trends-screenshot.png)
-
 > 来自创意工厂、抽卡等模式的热门 idea，❤️ 点赞排名：
 
 | # | ❤️ | 灵感 Idea | 来源 |
@@ -221,8 +219,6 @@ proj_1/
 - [ ] i18n support for more languages
 
 ### 🔥 Trends · Hot Ideas
-
-![Trends Screenshot](trends-screenshot.png)
 
 > Community-voted ideas from Idea Factory, Card Draw, and more:
 
