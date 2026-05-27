@@ -47,7 +47,7 @@ App.register('group', {
       resultsEl.innerHTML = groups.map((g, i) => `
         <div class="group-col">
           <h3>${t('groupCol')} ${i + 1} (${g.length} ${t('groupItems')})</h3>
-          ${g.map(item => `<li>${item}</li>`).join('')}
+          ${g.map(item => `<li>${item.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}</li>`).join('')}
         </div>
       `).join('');
     };

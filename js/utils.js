@@ -95,6 +95,11 @@ function saveData(key, data) {
   } catch { /* quota exceeded */ }
 }
 
+// HTML 转义 (防 XSS)
+function escapeHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 // 复制到剪贴板 (纯文本 + 视觉反馈)
 async function copyToClipboard(text, btn) {
   try {
