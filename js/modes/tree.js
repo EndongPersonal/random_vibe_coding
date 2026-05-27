@@ -29,7 +29,7 @@ App.register('tree', {
         <div class="tree-node" id="treeNode"></div>
         <div class="result-area" id="treeResult"></div>
         <div class="result-actions" id="treeActions" style="display:none;">
-          <button class="copy-btn" id="treeCopyBtn">📋 复制</button>
+          <button class="copy-btn" id="treeCopyBtn">${t('copyBtn')}</button>
           <button class="publish-btn" id="treePublishBtn">${t('coinPublish')}</button>
         </div>
       </div>`;

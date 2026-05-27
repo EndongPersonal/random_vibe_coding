@@ -15,7 +15,7 @@ App.register('card', {
         <button class="btn btn-primary" id="cardDrawBtn">${t('cardDraw')}</button>
         <div class="result-area" id="cardResult"></div>
         <div class="result-actions" id="cardActions" style="display:none;">
-          <button class="copy-btn" id="cardCopyBtn">📋 复制</button>
+          <button class="copy-btn" id="cardCopyBtn">${t('copyBtn')}</button>
           <button class="publish-btn" id="cardPublishBtn">${t('coinPublish')}</button>
         </div>
       </div>`;

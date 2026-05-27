@@ -14,7 +14,7 @@ App.register('iching', {
         <button class="btn btn-primary" id="ichingCastBtn">${t('ichingCast')}</button>
         <div class="result-area" id="ichingResult"></div>
         <div class="result-actions" id="ichingActions" style="display:none;">
-          <button class="copy-btn" id="ichingCopyBtn">📋 复制</button>
+          <button class="copy-btn" id="ichingCopyBtn">${t('copyBtn')}</button>
           <button class="publish-btn" id="ichingPublishBtn">${t('coinPublish')}</button>
         </div>
       </div>`;

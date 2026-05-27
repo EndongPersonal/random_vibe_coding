@@ -7,7 +7,7 @@ App.register('group', {
     return `
       <div class="card">
         <p style="color:var(--text-dim);margin-bottom:12px;font-size:0.9rem;">${t('groupHint')}</p>
-        <textarea class="group-input" id="groupInput" placeholder="Item A&#10;Item B&#10;Item C&#10;Item D&#10;Item E&#10;Item F"></textarea>
+        <textarea class="group-input" id="groupInput" placeholder="${t('groupPlaceholder')}"></textarea>
         <div class="group-count">
           <span style="color:var(--text-dim);font-size:0.9rem;">${t('groupSplit')}</span>
           <input type="number" id="groupNum" value="2" min="1" max="20">
@@ -25,7 +25,7 @@ App.register('group', {
     const resultsEl = document.getElementById('groupResults');
 
     if (!inputEl.value) {
-      inputEl.value = 'Item A\nItem B\nItem C\nItem D\nItem E\nItem F';
+      inputEl.value = t('groupPlaceholder').replace(/\\n/g, '\n');
     }
 
     groupBtn.onclick = () => {

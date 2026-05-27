@@ -70,20 +70,19 @@ App.register('fishing', {
         </div>
 
         <div class="fishing-controls">
-          <button class="btn btn-primary" id="fishingCastBtn">🎣 抛竿</button>
-          <button class="btn btn-primary" id="fishingReelBtn" style="display:none;">⚡ 收线！</button>
-        </div>
+<button class="btn btn-primary" id="fishingCastBtn">${t('fishingCast')}</button>
+          <button class="btn btn-primary" id="fishingReelBtn" style="display:none;">${t('fishingReel')}</button>
 
-        <div class="fishing-status" id="fishingStatus">准备好开始钓鱼了吗？</div>
+        <div class="fishing-status" id="fishingStatus">${t('fishingStatusIdle')}</div>
 
         <div class="result-area" id="fishingResult"></div>
         <div class="result-actions" id="fishingActions" style="display:none;">
-          <button class="copy-btn" id="fishingCopyBtn">📋 复制</button>
+          <button class="copy-btn" id="fishingCopyBtn">${t('copyBtn')}</button>
           <button class="publish-btn" id="fishingPublishBtn">${t('coinPublish')}</button>
         </div>
 
         <details class="fishing-collection" id="fishingCollectionDetails" open>
-          <summary>📖 我的鱼获图鉴 (<span id="fishingCollCount">0</span>/6)</summary>
+          <summary>${t('fishingCollection')} (<span id="fishingCollCount">0</span>/6)</summary>
           <div class="fishing-collection-grid" id="fishingCollection"></div>
         </details>
       </div>`;
@@ -172,7 +171,7 @@ App.register('fishing', {
       bobber.style.top = '65%';
       bobber.style.animation = 'bobFloat 2s ease-in-out infinite';
       castBtn.style.display = 'none';
-      statusEl.textContent = '🎣 浮漂在水面上轻轻晃动...等待鱼儿上钩...';
+      statusEl.textContent = t('fishingStatusWait');
 
       const waitTime = 2000 + Math.random() * 4000;
       biteTimer = setTimeout(() => {
@@ -180,7 +179,7 @@ App.register('fishing', {
         state = 'biting';
         scene.classList.add('fishing-biting');
         bobber.style.animation = 'bobBite 0.3s ease-in-out infinite';
-        statusEl.textContent = '⚡ 有鱼咬钩了！浮漂猛地往下沉！快收线！';
+        statusEl.textContent = t('fishingStatusBite');
         reelBtn.style.display = '';
       }, waitTime);
     };
@@ -190,7 +189,7 @@ App.register('fishing', {
       state = 'caught';
       clearTimeout(biteTimer);
       reelBtn.style.display = 'none';
-      statusEl.textContent = '🎣 正在奋力收线...';
+      statusEl.textContent = t('fishingStatusReel');
 
       scene.classList.add('fishing-reeling');
       bobber.style.animation = 'bobUp 0.5s ease-in forwards';
@@ -213,19 +212,19 @@ App.register('fishing', {
       // 显示灵感
       resultEl.innerHTML = `
         <div style="font-size:0.85rem;color:var(--text-dim);margin-bottom:6px;">
-          ${caughtFish.emoji} 钓到了 <span style="color:${caughtFish.color};font-weight:700;">${caughtFish.rarity}·${caughtFish.name}</span>
+          ${caughtFish.emoji} ${t('fishingCatchTitle')} <span style="color:${caughtFish.color};font-weight:700;">${caughtFish.rarity}·${caughtFish.name}</span>
         </div>
         <div style="font-size:1.1rem;line-height:1.7;">${idea.replace(/\n/g, '<br>')}</div>
       `;
       resultEl.classList.add('filled');
       actionsEl.style.display = 'flex';
       resultEl._lastResult = idea.replace(/\n/g, ' ');
-      statusEl.textContent = `🎉 成功钓到了一条${caughtFish.rarity}的${caughtFish.name}！`;
+      statusEl.textContent = `${t('fishingStatusCaught')}${caughtFish.rarity}的${caughtFish.name}！`;
 
       // 短暂等待后可再次抛竿
       await delay(3000);
       resetScene();
-      statusEl.textContent = '准备好再次抛竿了吗？🐟';
+      statusEl.textContent = t('fishingStatusReady');
     };
 
     publishBtn.onclick = () => {

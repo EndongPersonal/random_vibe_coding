@@ -13,7 +13,7 @@ App.register('wheel', {
         <button class="btn btn-primary" id="wheelSpinBtn">${t('wheelSpin')}</button>
         <div class="result-area" id="wheelResult"></div>
         <div class="result-actions" id="wheelActions" style="display:none;">
-          <button class="copy-btn" id="wheelCopyBtn">📋 复制</button>
+          <button class="copy-btn" id="wheelCopyBtn">${t('copyBtn')}</button>
           <button class="publish-btn" id="wheelPublishBtn">${t('coinPublish')}</button>
         </div>
       </div>`;

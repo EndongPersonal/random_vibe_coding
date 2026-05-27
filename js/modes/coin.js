@@ -16,7 +16,7 @@ App.register('coin', {
         <button class="btn btn-primary" id="coinFlipBtn">${t('coinFlip')}</button>
         <div class="result-area" id="coinResult"></div>
         <div class="result-actions" id="coinActions" style="display:none;">
-          <button class="copy-btn" id="coinCopyBtn">📋 复制</button>
+          <button class="copy-btn" id="coinCopyBtn">${t('copyBtn')}</button>
           <button class="publish-btn" id="coinPublishBtn">${t('coinPublish')}</button>
         </div>
       </div>`;

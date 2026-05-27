@@ -88,7 +88,9 @@ const App = {
     this.currentMode = name;
 
     document.querySelectorAll('.nav-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.mode === name);
+      const active = btn.dataset.mode === name;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
 
     document.querySelectorAll('.mode-panel').forEach(p => {

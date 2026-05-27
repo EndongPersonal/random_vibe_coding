@@ -11,7 +11,7 @@
 
 ### 这是什么？
 
-**Vibe Coding Roller** 是一个趣味随机灵感决策工具。当你不知道今天该写什么代码时，让命运帮你决定 —— 掷骰子、抽卡牌、转盘、起卦、翻黄历……10 种模式，650+ 灵感选项，给你一个无法拒绝的 coding 方向。
+**Vibe Coding Roller** 是一个趣味随机灵感决策工具。当你不知道今天该写什么代码时，让命运帮你决定 —— 掷骰子、抽卡牌、转盘、起卦、翻黄历、电子钓鱼……11 种模式，650+ 灵感选项，给你一个无法拒绝的 coding 方向。
 
 ### 功能模式
 
@@ -27,6 +27,7 @@
 | 黄历 | 📅 | 基于日期的今日 coding 宜忌，每日更新 |
 | 创意工厂 | 🏭 | 模板填空：给`[谁]`用`[什么]`做`[功能]`发布为`[平台]`，每空位可自选随机模式 |
 | 灵感 Trends | 🔥 | 发布想法到灵感广场，❤️ 点赞，热度排行 |
+| 电子钓鱼 | 🎣 | 抛竿等待咬钩，钓上不同稀有度的鱼，每条鱼带来一个灵感 idea |
 
 ### 技术栈
 
@@ -74,6 +75,7 @@ proj_1/
 │       ├── almanac.js      # 黄历
 │       ├── factory.js      # 创意工厂
 │       └── trends.js       # 灵感Trends
+│       └── fishing.js      # 电子钓鱼
 └── LICENSE                 # MIT
 ```
 
@@ -136,7 +138,7 @@ proj_1/
 
 ### What is this?
 
-**Vibe Coding Roller** is a fun random inspiration tool for developers. When you don't know what to code today, let fate decide — roll dice, draw cards, spin the wheel, consult the I Ching, check the dev almanac... 10 modes, 650+ inspiration options, giving you a coding direction you can't refuse.
+**Vibe Coding Roller** is a fun random inspiration tool for developers. When you don't know what to code today, let fate decide — roll dice, draw cards, spin the wheel, consult the I Ching, check the dev almanac, go fishing... 11 modes, 650+ inspiration options, giving you a coding direction you can't refuse.
 
 ### Modes
 
@@ -152,6 +154,7 @@ proj_1/
 | Dev Almanac | 📅 | Daily coding dos and don'ts (date-seeded) |
 | Idea Factory | 🏭 | Template: For `[who]` using `[what]` build `[feature]` as `[platform]` |
 | Trends | 🔥 | Publish ideas, ❤️ likes, hot ranking |
+| Fishing | 🎣 | Cast a line, wait for bites, catch fish of different rarities — each brings a coding idea |
 
 ### Tech Stack
 
@@ -197,6 +200,7 @@ proj_1/
 │       ├── almanac.js      # Dev almanac
 │       ├── factory.js      # Idea factory
 │       └── trends.js       # Trends ranking
+│       └── fishing.js      # Fishing
 └── LICENSE                 # MIT
 ```
 

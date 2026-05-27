@@ -101,7 +101,7 @@ async function copyToClipboard(text, btn) {
     await navigator.clipboard.writeText(text);
     if (btn) {
       const orig = btn.textContent;
-      btn.textContent = '✓ ' + (I18n && I18n.current === 'en' ? 'Copied!' : '已复制');
+      btn.textContent = t('copyDone');
       btn.classList.add('copied');
       setTimeout(() => {
         btn.textContent = orig;
@@ -118,8 +118,13 @@ async function copyToClipboard(text, btn) {
     document.execCommand('copy');
     document.body.removeChild(ta);
     if (btn) {
-      btn.textContent = '✓';
-      setTimeout(() => { btn.textContent = '📋'; }, 1500);
+      const orig = btn.textContent;
+      btn.textContent = t('copyDone');
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.classList.remove('copied');
+      }, 1500);
     }
   }
 }

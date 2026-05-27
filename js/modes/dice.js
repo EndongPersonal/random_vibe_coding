@@ -19,7 +19,7 @@ App.register('dice', {
         <button class="btn btn-primary" id="diceRollBtn">${t('diceRoll')}</button>
         <div class="result-area" id="diceResult"></div>
         <div class="result-actions" id="diceActions" style="display:none;">
-          <button class="copy-btn" id="diceCopyBtn">📋 复制</button>
+          <button class="copy-btn" id="diceCopyBtn">${t('copyBtn')}</button>
           <button class="publish-btn" id="dicePublishBtn">${t('coinPublish')}</button>
         </div>
       </div>`;

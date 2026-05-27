@@ -53,7 +53,8 @@ App.register('trends', {
       }
 
       listEl.innerHTML = ideas.map((idea, i) => {
-        const isLiked = liked[idea.content] || false;
+        const likedKey = idea.content + '|' + idea.time;
+        const isLiked = liked[likedKey] || false;
         const rank = sortMode === 'hot' ? i + 1 : null;
         const rankClass = rank && rank <= 3 ? ' top' : '';
 
@@ -108,7 +109,7 @@ App.register('trends', {
           const origIdx = ideas.findIndex(i => i.content === idea.content && i.time === idea.time);
           if (origIdx === -1) return;
 
-          const key = idea.content;
+          const key = idea.content + '|' + idea.time;
           if (liked[key]) {
             ideas[origIdx].likes = Math.max(0, ideas[origIdx].likes - 1);
             delete liked[key];

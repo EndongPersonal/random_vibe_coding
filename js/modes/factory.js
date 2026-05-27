@@ -33,7 +33,7 @@ App.register('factory', {
         <button class="btn btn-primary" id="factoryGenerateBtn">${t('factoryGenerate')}</button>
         <div class="result-area factory-result" id="factoryResult"></div>
         <div class="result-actions" id="factoryActions" style="display:none;">
-          <button class="copy-btn" id="factoryCopyBtn">📋 复制</button>
+          <button class="copy-btn" id="factoryCopyBtn">${t('copyBtn')}</button>
           <button class="publish-btn" id="factoryPublishBtn">${t('coinPublish')}</button>
         </div>
       </div>`;
