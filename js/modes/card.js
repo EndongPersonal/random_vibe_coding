@@ -49,7 +49,7 @@ App.register('card', {
       drawBtn.disabled = false;
     };
 
-    publishBtn.onclick = () => publishIdea(currentCard, '抽卡');
+    publishBtn.onclick = () => publishIdea(currentCard, t('trendsSourceCard'));
     copyBtn.onclick = () => copyToClipboard(currentCard, copyBtn);
     document.getElementById('cardDeck').onclick = () => drawBtn.click();
   }

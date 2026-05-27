@@ -5,7 +5,7 @@
 
 const App = {
   currentMode: 'coin',
-  theme: localStorage.getItem('theme') || 'dark',
+  theme: localStorage.getItem('theme') || 'light',
 
   modes: {},
 

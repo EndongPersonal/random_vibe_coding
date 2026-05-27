@@ -63,7 +63,7 @@ App.register('iching', {
       castBtn.disabled = false;
     };
 
-    publishBtn.onclick = () => publishIdea(publishBtn._lastResult || '梅花易数卦象', '梅花易数');
+    publishBtn.onclick = () => publishIdea(publishBtn._lastResult || t('trendsSourceIching'), t('trendsSourceIching'));
     copyBtn.onclick = () => copyToClipboard(publishBtn._lastResult || '', copyBtn);
   }
 });

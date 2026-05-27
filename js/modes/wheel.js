@@ -88,7 +88,7 @@ App.register('wheel', {
       requestAnimationFrame(animate);
     };
 
-    publishBtn.onclick = () => publishIdea(canvas._lastResult || '转盘随机项目', '转盘');
+    publishBtn.onclick = () => publishIdea(canvas._lastResult || '转盘随机项目', t('trendsSourceWheel'));
     copyBtn.onclick = () => copyToClipboard(canvas._lastResult || '', copyBtn);
   }
 });

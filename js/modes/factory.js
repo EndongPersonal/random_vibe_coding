@@ -110,7 +110,7 @@ App.register('factory', {
     };
 
     publishBtn.onclick = function() {
-      publishIdea(resultEl._lastResult || '创意工厂组合结果', '创意工厂');
+      publishIdea(resultEl._lastResult || '创意工厂组合结果', t('trendsSourceFactory'));
     };
     copyBtn.onclick = function() {
       copyToClipboard(resultEl._lastResult || '');

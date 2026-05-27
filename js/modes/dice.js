@@ -63,7 +63,7 @@ App.register('dice', {
       diceEl._lastResult = topic;
     };
 
-    publishBtn.onclick = () => publishIdea(diceEl._lastResult || Topics.dice[0], '骰子');
+    publishBtn.onclick = () => publishIdea(diceEl._lastResult || Topics.dice[0], t('trendsSourceDice'));
     copyBtn.onclick = () => copyToClipboard(diceEl._lastResult || Topics.dice[0], copyBtn);
   }
 });

@@ -78,7 +78,7 @@ App.register('tree', {
     actionsEl.style.display = 'none';
     renderNode(this.getTree());
 
-    publishBtn.onclick = () => publishIdea(publishBtn._lastResult || 'Decision tree result', '决策树');
+    publishBtn.onclick = () => publishIdea(publishBtn._lastResult || t('trendsSourceTree'), t('trendsSourceTree'));
     copyBtn.onclick = () => copyToClipboard(publishBtn._lastResult || '', copyBtn);
   }
 });

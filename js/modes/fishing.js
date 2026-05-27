@@ -219,7 +219,7 @@ App.register('fishing', {
       resultEl.classList.add('filled');
       actionsEl.style.display = 'flex';
       resultEl._lastResult = idea.replace(/\n/g, ' ');
-      statusEl.textContent = `${t('fishingStatusCaught')}${caughtFish.rarity}的${caughtFish.name}！`;
+      statusEl.textContent = t('fishingStatusCaught') + ' ' + caughtFish.rarity + ' ' + caughtFish.name + '!';
 
       // 短暂等待后可再次抛竿
       await delay(3000);
@@ -230,12 +230,12 @@ App.register('fishing', {
     publishBtn.onclick = () => {
       const text = caughtFish
         ? `[${caughtFish.rarity}·${caughtFish.name}] ${resultEl._lastResult || ''}`
-        : (resultEl._lastResult || '钓鱼收获');
-      publishIdea(text, '电子钓鱼');
+        : (resultEl._lastResult || t('fishingSource'));
+      publishIdea(text, t('fishingSource'));
     };
     copyBtn.onclick = () => copyToClipboard(resultEl._lastResult || '', copyBtn);
 
     updateCollection();
-    statusEl.textContent = '准备好开始钓鱼了吗？🐟';
+    statusEl.textContent = t('fishingStatusIdle');
   }
 });

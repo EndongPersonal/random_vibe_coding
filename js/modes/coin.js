@@ -38,7 +38,7 @@ App.register('coin', {
       pairEl.textContent = `${currentPair.a}   VS   ${currentPair.b}`;
     }
 
-    publishBtn.onclick = () => publishIdea(currentResult, '掷硬币');
+    publishBtn.onclick = () => publishIdea(currentResult, t('trendsSourceCoin'));
     copyBtn.onclick = () => copyToClipboard(currentResult, copyBtn);
 
     flipBtn.onclick = async () => {

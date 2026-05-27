@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="dark">
+<html lang="zh-CN" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,25 +17,18 @@
 </head>
 <body>
 
-  <!-- 动态背景光晕 -->
-  <div class="bg-orbs" aria-hidden="true">
-    <div class="bg-orb"></div>
-    <div class="bg-orb"></div>
-    <div class="bg-orb"></div>
-  </div>
-
   <!-- Top Bar -->
   <div class="topbar" id="topbar" role="toolbar" aria-label="工具条">
-    <button data-action="theme" id="btnTheme" data-i18n="themeDark" aria-label="切换主题">🌙 暗色</button>
+    <button data-action="theme" id="btnTheme" data-i18n="themeLight" aria-label="切换主题">☀️ 亮色</button>
     <button data-action="lang" data-lang="zh" class="active" data-i18n="langZH" aria-label="切换到中文">中文</button>
     <button data-action="lang" data-lang="en" data-i18n="langEN" aria-label="Switch to English">English</button>
   </div>
 
-  <!-- Header -->
-  <header class="header">
+  <!-- Hero -->
+  <section class="hero">
     <h1>Vibe Coding Roller</h1>
     <p class="subtitle" data-i18n="subtitle">随机决策 · 灵感生成 · 今天写什么？</p>
-  </header>
+  </section>
 
   <!-- Mode Navigation -->
   <div class="nav-wrapper">
@@ -58,7 +51,7 @@
   <main class="main" id="main" aria-live="polite">
     <noscript>
       <div class="card" style="padding:40px;text-align:center;">
-        <p style="font-size:1.2rem;color:var(--text-dim);">${t('noscript')}</p>
+        <p style="font-size:1.1rem;color:var(--text-secondary);">请启用 JavaScript 以使用 Vibe Coding Roller。</p>
       </div>
     </noscript>
   </main>
