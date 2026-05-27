@@ -140,7 +140,16 @@ const I18n = {
       fishingStatusReady: '准备好再次抛竿了吗？🐟',
       fishingCollection: '📖 我的鱼获图鉴',
       fishingCatchTitle: '钓到了',
-      fishingSource: '电子钓鱼'
+      fishingSource: '电子钓鱼',
+      // 鱼种数据
+      fishingFish: [
+        { name: '小丑鱼', rarity: '普通', desc: '一条活泼的小丑鱼，带来了一个轻松有趣的小项目' },
+        { name: '热带鱼', rarity: '稀有', desc: '一条色彩斑斓的热带鱼，闪烁着创意的光芒' },
+        { name: '鱿鱼',   rarity: '罕见', desc: '一只神秘的鱿鱼，喷出了一团奇怪的灵感墨水' },
+        { name: '鲨鱼',   rarity: '史诗', desc: '一条凶猛的鲨鱼，带来了一个野心勃勃的大项目' },
+        { name: '章鱼',   rarity: '神话', desc: '一只古老的章鱼智者，八条触手各握着一个绝妙创意' },
+        { name: '鲸鱼',   rarity: '传说', desc: '深海巨鲸浮出水面，带来一个足以改变世界的灵感' }
+      ]
     },
 
     en: {
@@ -264,7 +273,15 @@ const I18n = {
       fishingStatusReady: 'Ready to cast again? 🐟',
       fishingCollection: '📖 Catch Collection',
       fishingCatchTitle: 'caught',
-      fishingSource: 'Fishing'
+      fishingSource: 'Fishing',
+      fishingFish: [
+        { name: 'Clownfish', rarity: 'Common', desc: 'A lively clownfish, bringing a fun little project' },
+        { name: 'Tropical',  rarity: 'Rare', desc: 'A colorful tropical fish, shimmering with creative light' },
+        { name: 'Squid',     rarity: 'Uncommon', desc: 'A mysterious squid, spraying a blob of strange inspiration ink' },
+        { name: 'Shark',     rarity: 'Epic', desc: 'A fierce shark, bringing an ambitious big project' },
+        { name: 'Octopus',   rarity: 'Mythic', desc: 'An ancient octopus sage, each tentacle holding a brilliant idea' },
+        { name: 'Whale',     rarity: 'Legendary', desc: 'A deep-sea whale surfaces, bringing a world-changing inspiration' }
+      ]
     }
   },
 

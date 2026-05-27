@@ -1,55 +1,8 @@
 // ============================================================
-// fishing.js — 电子钓鱼模式
+// fishing.js — 电子钓鱼模式 (双语鱼数据)
 // ============================================================
 
 App.register('fishing', {
-  fishTypes: [
-    { id: 'clown',  name: '小丑鱼', emoji: '🐟', rarity: '普通', rate: 35, color: '#ff914d',
-      desc: '一条活泼的小丑鱼，带来了一个轻松有趣的小项目',
-      pool() {
-        const easy = Topics.cards.filter(c => c.length < 25);
-        return randomPick(easy.length ? easy : Topics.cards);
-      }
-    },
-    { id: 'tropical', name: '热带鱼', emoji: '🐠', rarity: '稀有', rate: 25, color: '#ff6b9d',
-      desc: '一条色彩斑斓的热带鱼，闪烁着创意的光芒',
-      pool() {
-        const mid = Topics.cards.filter(c => c.length >= 15 && c.length < 35);
-        return randomPick(mid.length ? mid : Topics.cards);
-      }
-    },
-    { id: 'squid',   name: '鱿鱼',   emoji: '🦑', rarity: '罕见', rate: 15, color: '#c084fc',
-      desc: '一只神秘的鱿鱼，喷出了一团奇怪的灵感墨水',
-      pool() {
-        const weird = Topics.features.filter(f =>
-          f.includes('奇怪') || f.includes('阴谋') || f.includes('屎山') ||
-          f.includes('摸鱼') || f.includes('解压') || f.includes('宠物') || f.includes('打分')
-        );
-        const w = randomPick(weird.length ? weird : Topics.features);
-        return w + ' —— ' + randomPick(Topics.cards);
-      }
-    },
-    { id: 'shark',   name: '鲨鱼',   emoji: '🦈', rarity: '史诗', rate: 12, color: '#60a5fa',
-      desc: '一条凶猛的鲨鱼，带来了一个野心勃勃的大项目',
-      pool() {
-        return `给${randomPick(Topics.users)}用${randomPick(Topics.tools)}做一个${randomPick(Topics.features)}，发布为${randomPick(Topics.platforms)}`;
-      }
-    },
-    { id: 'octopus', name: '章鱼',   emoji: '🐙', rarity: '神话', rate: 8,  color: '#f472b6',
-      desc: '一只古老的章鱼智者，八条触手各握着一个绝妙创意',
-      pool() {
-        const ideas = [];
-        for (let i = 0; i < 3; i++) ideas.push(randomPick(Topics.cards));
-        return ideas.join('；\n');
-      }
-    },
-    { id: 'whale',   name: '鲸鱼',   emoji: '🐳', rarity: '传说', rate: 5,  color: '#818cf8',
-      desc: '深海巨鲸浮出水面，带来一个足以改变世界的灵感',
-      pool() {
-        return `🌟 史诗项目\n给${randomPick(Topics.users)}用${randomPick(Topics.tools)}做一个${randomPick(Topics.features)}，发布为${randomPick(Topics.platforms)}`;
-      }
-    }
-  ],
 
   render() {
     return `
@@ -70,8 +23,9 @@ App.register('fishing', {
         </div>
 
         <div class="fishing-controls">
-<button class="btn btn-primary" id="fishingCastBtn">${t('fishingCast')}</button>
+          <button class="btn btn-primary" id="fishingCastBtn">${t('fishingCast')}</button>
           <button class="btn btn-primary" id="fishingReelBtn" style="display:none;">${t('fishingReel')}</button>
+        </div>
 
         <div class="fishing-status" id="fishingStatus">${t('fishingStatusIdle')}</div>
 
@@ -89,7 +43,6 @@ App.register('fishing', {
   },
 
   onActivate() {
-    const self = this; // 缓存模式配置引用
     const scene = document.getElementById('fishingScene');
     const bobber = document.getElementById('fishingBobber');
     const line = document.getElementById('fishingLine');
@@ -112,6 +65,36 @@ App.register('fishing', {
     let caughtFish = null;
     let biteTimer = null;
 
+    // 构建鱼种列表 (从 i18n + Topics 动态生成)
+    function buildFishTypes() {
+      const fishData = I18n.data[I18n.current].fishingFish;
+      const emojis = ['🐟', '🐠', '🦑', '🦈', '🐙', '🐳'];
+      const colors = ['#ff914d', '#ff6b9d', '#c084fc', '#60a5fa', '#f472b6', '#818cf8'];
+      const rates = [35, 25, 15, 12, 8, 5];
+      const en = I18n.current === 'en';
+
+      return fishData.map((fd, i) => ({
+        id: ['clown','tropical','squid','shark','octopus','whale'][i],
+        name: fd.name, rarity: fd.rarity, desc: fd.desc,
+        emoji: emojis[i], color: colors[i], rate: rates[i],
+        pool() {
+          if (i === 0) { const e = Topics.cards.filter(c => c.length < 25); return randomPick(e.length ? e : Topics.cards); }
+          if (i === 1) { const m = Topics.cards.filter(c => c.length >= 15 && c.length < 35); return randomPick(m.length ? m : Topics.cards); }
+          if (i === 2) {
+            const weird = Topics.features.filter(f => f.includes('奇怪') || f.includes('阴谋') || f.includes('屎山') || f.includes('摸鱼') || f.includes('解压') || f.includes('宠物') || f.includes('打分'));
+            return randomPick(weird.length ? weird : Topics.features) + ' — ' + randomPick(Topics.cards);
+          }
+          if (i === 3) return en
+            ? `For ${randomPick(Topics.users)} using ${randomPick(Topics.tools)} build a ${randomPick(Topics.features)} as a ${randomPick(Topics.platforms)}`
+            : `给${randomPick(Topics.users)}用${randomPick(Topics.tools)}做一个${randomPick(Topics.features)}，发布为${randomPick(Topics.platforms)}`;
+          if (i === 4) { const ids = []; for (let j=0;j<3;j++) ids.push(randomPick(Topics.cards)); return ids.join(en ? ';\n' : '；\n'); }
+          if (i === 5) return en
+            ? `Epic project\nFor ${randomPick(Topics.users)} using ${randomPick(Topics.tools)} build a ${randomPick(Topics.features)} as a ${randomPick(Topics.platforms)}`
+            : `🌟 史诗项目\n给${randomPick(Topics.users)}用${randomPick(Topics.tools)}做一个${randomPick(Topics.features)}，发布为${randomPick(Topics.platforms)}`;
+        }
+      }));
+    }
+
     function resetScene() {
       state = 'idle';
       catchEl.style.display = 'none';
@@ -122,42 +105,50 @@ App.register('fishing', {
       castBtn.style.display = '';
       reelBtn.style.display = 'none';
       clearTimeout(biteTimer);
-      // 不清理结果区，让用户继续看到上次钓到的灵感
     }
 
     function randomFish() {
+      const fishTypes = buildFishTypes();
       const rand = randomInt(1, 101);
       let cumulative = 0;
-      for (const fish of self.fishTypes) {
+      for (const fish of fishTypes) {
         cumulative += fish.rate;
         if (rand <= cumulative) return fish;
       }
-      return self.fishTypes[0];
+      return fishTypes[0];
     }
 
     function updateCollection() {
+      const fishTypes = buildFishTypes();
       const caught = loadData('fishing_caught', []);
       collCount.textContent = caught.length;
 
-      collGrid.innerHTML = self.fishTypes.map(f => {
+      const frag = document.createDocumentFragment();
+      fishTypes.forEach(f => {
         const isCaught = caught.includes(f.id);
-        return `
-          <div class="fishing-coll-item ${isCaught ? 'caught' : 'locked'}">
-            <div class="fishing-coll-emoji">${isCaught ? f.emoji : '❓'}</div>
-            <div class="fishing-coll-name">${isCaught ? f.name : '???'}</div>
-            <div class="fishing-coll-rarity" style="color:${f.color}">${f.rarity}</div>
-          </div>
-        `;
-      }).join('');
+        const item = document.createElement('div');
+        item.className = 'fishing-coll-item ' + (isCaught ? 'caught' : 'locked');
+        item.innerHTML = `<div class="fishing-coll-emoji">${isCaught ? f.emoji : '❓'}</div>`;
+        const nameEl = document.createElement('div');
+        nameEl.className = 'fishing-coll-name';
+        nameEl.textContent = isCaught ? f.name : '???';
+        item.appendChild(nameEl);
+        const rarityEl = document.createElement('div');
+        rarityEl.className = 'fishing-coll-rarity';
+        rarityEl.style.color = f.color;
+        rarityEl.textContent = f.rarity;
+        item.appendChild(rarityEl);
+        frag.appendChild(item);
+      });
+      collGrid.innerHTML = '';
+      collGrid.appendChild(frag);
     }
 
     function recordCatch(fishId) {
       const caught = loadData('fishing_caught', []);
-      const isNew = !caught.includes(fishId);
-      if (isNew) {
+      if (!caught.includes(fishId)) {
         caught.push(fishId);
         saveData('fishing_caught', caught);
-        // 首次捕获自动展开图鉴
         collDetails.open = true;
       }
       updateCollection();
@@ -199,7 +190,6 @@ App.register('fishing', {
       caughtFish = randomFish();
       const idea = caughtFish.pool();
 
-      // 鱼出现
       catchFish.innerHTML = `<span style="font-size:5rem;display:block;animation:fishAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);text-shadow:0 0 30px ${caughtFish.color};">${caughtFish.emoji}</span>`;
       catchName.textContent = caughtFish.name;
       catchRarity.innerHTML = `<span style="color:${caughtFish.color};font-weight:700;font-size:0.9rem;">${caughtFish.rarity}</span> · ${caughtFish.desc}`;
@@ -209,19 +199,24 @@ App.register('fishing', {
 
       await delay(600);
 
-      // 显示灵感
-      resultEl.innerHTML = `
-        <div style="font-size:0.85rem;color:var(--text-dim);margin-bottom:6px;">
-          ${caughtFish.emoji} ${t('fishingCatchTitle')} <span style="color:${caughtFish.color};font-weight:700;">${caughtFish.rarity}·${caughtFish.name}</span>
-        </div>
-        <div style="font-size:1.1rem;line-height:1.7;">${idea.replace(/\n/g, '<br>')}</div>
-      `;
+      // 使用文档片段构建结果
+      const frag = document.createDocumentFragment();
+      const meta = document.createElement('div');
+      meta.style.cssText = 'font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;';
+      meta.textContent = `${caughtFish.emoji} ${t('fishingCatchTitle')} ${caughtFish.rarity} · ${caughtFish.name}`;
+      frag.appendChild(meta);
+      const body = document.createElement('div');
+      body.style.cssText = 'font-size:1.1rem;line-height:1.7;';
+      body.innerHTML = idea.replace(/\n/g, '<br>');
+      frag.appendChild(body);
+      resultEl.innerHTML = '';
+      resultEl.appendChild(frag);
       resultEl.classList.add('filled');
       actionsEl.style.display = 'flex';
       resultEl._lastResult = idea.replace(/\n/g, ' ');
-      statusEl.textContent = t('fishingStatusCaught') + ' ' + caughtFish.rarity + ' ' + caughtFish.name + '!';
 
-      // 短暂等待后可再次抛竿
+      statusEl.textContent = `${t('fishingStatusCaught')} ${caughtFish.rarity} · ${caughtFish.name}!`;
+
       await delay(3000);
       resetScene();
       statusEl.textContent = t('fishingStatusReady');
@@ -229,7 +224,7 @@ App.register('fishing', {
 
     publishBtn.onclick = () => {
       const text = caughtFish
-        ? `[${caughtFish.rarity}·${caughtFish.name}] ${resultEl._lastResult || ''}`
+        ? `[${caughtFish.rarity} · ${caughtFish.name}] ${resultEl._lastResult || ''}`
         : (resultEl._lastResult || t('fishingSource'));
       publishIdea(text, t('fishingSource'));
     };

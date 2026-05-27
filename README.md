@@ -59,9 +59,10 @@ open index.html
 proj_1/
 ├── index.html              # 主页面
 ├── css/
-│   └── style.css           # 暗色霓虹主题样式
+│   └── style.css           # Apple风格极简主题
 ├── js/
 │   ├── app.js              # 入口 + 模式路由
+│   ├── i18n.js             # 中英翻译
 │   ├── topics.js           # 650+ 选项池数据
 │   ├── utils.js            # 通用工具函数
 │   └── modes/
@@ -74,7 +75,7 @@ proj_1/
 │       ├── group.js        # 分组
 │       ├── almanac.js      # 黄历
 │       ├── factory.js      # 创意工厂
-│       └── trends.js       # 灵感Trends
+│       ├── trends.js       # 灵感Trends
 │       └── fishing.js      # 电子钓鱼
 └── LICENSE                 # MIT
 ```
@@ -184,9 +185,10 @@ open index.html
 proj_1/
 ├── index.html              # Main page
 ├── css/
-│   └── style.css           # Dark neon theme styles
+│   └── style.css           # Apple-inspired minimal theme
 ├── js/
 │   ├── app.js              # Entry + mode router
+│   ├── i18n.js             # i18n translations
 │   ├── topics.js           # 650+ option pool data
 │   ├── utils.js            # Utility functions
 │   └── modes/
@@ -199,7 +201,8 @@ proj_1/
 │       ├── group.js        # Grouping
 │       ├── almanac.js      # Dev almanac
 │       ├── factory.js      # Idea factory
-│       └── trends.js       # Trends ranking
+│       ├── trends.js       # Trends ranking
+│       └── fishing.js      # Fishing
 │       └── fishing.js      # Fishing
 └── LICENSE                 # MIT
 ```
