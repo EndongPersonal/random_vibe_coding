@@ -22,6 +22,7 @@
     <button data-action="theme" id="btnTheme" data-i18n="themeLight" aria-label="切换主题">☀️ 亮色</button>
     <button data-action="lang" data-lang="zh" class="active" data-i18n="langZH" aria-label="切换到中文">中文</button>
     <button data-action="lang" data-lang="en" data-i18n="langEN" aria-label="Switch to English">English</button>
+    <button data-action="ai" id="btnAI" data-i18n="aiSettings">⚙️ AI</button>
   </div>
 
   <!-- Hero -->
@@ -56,10 +57,35 @@
     </noscript>
   </main>
 
+  <!-- AI Settings Modal -->
+  <div class="ai-modal-overlay" id="aiModalOverlay" style="display:none;">
+    <div class="ai-modal" role="dialog" aria-label="AI Settings">
+      <div class="ai-modal-header">
+        <h2 data-i18n="aiSettings">⚙️ AI 设置</h2>
+        <button class="ai-modal-close" id="aiModalClose" aria-label="Close">&times;</button>
+      </div>
+      <div class="ai-modal-body">
+        <p class="ai-modal-note">配置你的 OpenAI 兼容 API 来启用 AI 增强功能。API Key 仅存储在本地浏览器中。</p>
+        <label class="ai-label" data-i18n="aiApiKey">API Key</label>
+        <input type="password" class="ai-input" id="aiApiKey" placeholder="sk-...">
+        <label class="ai-label" data-i18n="aiEndpoint">API 地址</label>
+        <input type="text" class="ai-input" id="aiEndpoint" placeholder="https://api.openai.com/v1/chat/completions">
+        <label class="ai-label" data-i18n="aiModel">模型</label>
+        <input type="text" class="ai-input" id="aiModel" placeholder="gpt-4o-mini">
+        <div class="ai-modal-actions">
+          <button class="btn btn-secondary" id="aiTestBtn" data-i18n="aiTest">测试连接</button>
+          <button class="btn btn-primary" id="aiSaveBtn" data-i18n="aiSave">保存配置</button>
+        </div>
+        <p class="ai-test-result" id="aiTestResult"></p>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <script src="js/topics.js"></script>
   <script src="js/utils.js"></script>
   <script src="js/i18n.js"></script>
+  <script src="js/ai.js"></script>
   <script src="js/app.js"></script>
   <script src="js/modes/coin.js"></script>
   <script src="js/modes/dice.js"></script>

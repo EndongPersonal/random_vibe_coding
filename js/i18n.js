@@ -149,7 +149,31 @@ const I18n = {
         { name: '鲨鱼',   rarity: '史诗', desc: '一条凶猛的鲨鱼，带来了一个野心勃勃的大项目' },
         { name: '章鱼',   rarity: '神话', desc: '一只古老的章鱼智者，八条触手各握着一个绝妙创意' },
         { name: '鲸鱼',   rarity: '传说', desc: '深海巨鲸浮出水面，带来一个足以改变世界的灵感' }
-      ]
+      ],
+
+      // AI 增强
+      aiSettings: '⚙️ AI 设置',
+      aiApiKey: 'API Key',
+      aiEndpoint: 'API 地址',
+      aiModel: '模型',
+      aiSave: '保存配置',
+      aiTest: '测试连接',
+      aiTesting: '测试中…',
+      aiTestOk: '✓ 连接成功',
+      aiTestFail: '✗ 连接失败',
+      aiHint: '✨ AI 解读',
+      aiStarter: '🚀 一键 Vibe',
+      aiHintLoading: 'AI 思考中…',
+      aiErrorNoKey: '请先在 AI 设置中配置 API Key',
+      aiErrorCall: 'AI 调用失败，请检查配置',
+      aiCopyStarter: '📋 复制启动模板',
+      // AI System Prompts
+      aiSystemExpand: '你是创意编程灵感生成器。根据给出的类别和已有选项，生成全新、有趣、有创意的编程项目选项。只返回选项列表，每行一个，不要编号和额外解释。',
+      aiPromptExpand: '类别: {category}\n已有选项: {existing}\n请生成 {count} 个新的编程灵感选项。',
+      aiSystemHint: '你是编程导师。针对给出的编程灵感，提供简洁实用的技术解读，包括：用什么技术栈、核心难点是什么、大概需要多长时间、有什么可以参考的资源。用友好轻松的语气。',
+      aiPromptHint: '请为这个编程灵感提供解读:\n{idea}',
+      aiSystemStarter: '你是全栈开发专家。为给定的编程项目灵感，生成一个简洁的启动模板，包括：项目名、一句话描述、推荐技术栈、核心功能列表（5-7条）、项目目录结构建议。格式清晰，直接可用。',
+      aiPromptStarter: '请为这个项目生成启动模板:\n{idea}'
     },
 
     en: {
@@ -281,7 +305,30 @@ const I18n = {
         { name: 'Shark',     rarity: 'Epic', desc: 'A fierce shark, bringing an ambitious big project' },
         { name: 'Octopus',   rarity: 'Mythic', desc: 'An ancient octopus sage, each tentacle holding a brilliant idea' },
         { name: 'Whale',     rarity: 'Legendary', desc: 'A deep-sea whale surfaces, bringing a world-changing inspiration' }
-      ]
+      ],
+
+      // AI Enhancement
+      aiSettings: '⚙️ AI Settings',
+      aiApiKey: 'API Key',
+      aiEndpoint: 'API URL',
+      aiModel: 'Model',
+      aiSave: 'Save',
+      aiTest: 'Test Connection',
+      aiTesting: 'Testing…',
+      aiTestOk: '✓ Connected',
+      aiTestFail: '✗ Failed',
+      aiHint: '✨ AI Hint',
+      aiStarter: '🚀 Start Vibe',
+      aiHintLoading: 'AI thinking…',
+      aiErrorNoKey: 'Please configure API Key in AI Settings first',
+      aiErrorCall: 'AI call failed, check your settings',
+      aiCopyStarter: '📋 Copy Starter',
+      aiSystemExpand: 'You are a creative programming inspiration generator. Based on the given category and existing options, generate new, fun, creative programming project ideas. Return only the list, one per line, no numbers or extra explanation.',
+      aiPromptExpand: 'Category: {category}\nExisting: {existing}\nGenerate {count} new programming inspiration ideas.',
+      aiSystemHint: 'You are a programming mentor. Provide a concise, practical technical breakdown for the given coding idea: recommended tech stack, core challenges, estimated time, reference resources. Use a friendly, casual tone.',
+      aiPromptHint: 'Provide a breakdown for this coding idea:\n{idea}',
+      aiSystemStarter: 'You are a full-stack developer expert. Generate a concise starter template for the given project idea: project name, one-line description, recommended tech stack, 5-7 core features, suggested directory structure. Format cleanly.',
+      aiPromptStarter: 'Generate a starter template for this project:\n{idea}'
     }
   },
 

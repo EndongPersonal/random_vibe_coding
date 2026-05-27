@@ -100,7 +100,86 @@ function escapeHtml(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// 复制到剪贴板 (纯文本 + 视觉反馈)
+// 为结果区添加 AI 增强按钮 (如果 AI 已配置)
+function injectAIButtons(actionsEl, getResultText) {
+  if (!actionsEl || actionsEl.querySelector('.ai-hint-btn')) return;
+
+  const cfg = AIService.getConfig();
+
+  const hintBtn = document.createElement('button');
+  hintBtn.className = 'ai-btn ai-hint-btn';
+  hintBtn.textContent = t('aiHint');
+  hintBtn.style.display = cfg.enabled ? '' : 'none';
+
+  const starterBtn = document.createElement('button');
+  starterBtn.className = 'ai-btn ai-starter-btn';
+  starterBtn.textContent = t('aiStarter');
+  starterBtn.style.display = cfg.enabled ? '' : 'none';
+
+  // 找到 actions 区域的父容器来追加 AI 结果
+  const card = actionsEl.closest('.card');
+  let aiResultEl = card ? card.querySelector('.ai-result') : null;
+  if (!aiResultEl && card) {
+    aiResultEl = document.createElement('div');
+    aiResultEl.className = 'ai-result';
+    aiResultEl.style.display = 'none';
+    card.appendChild(aiResultEl);
+  }
+
+  hintBtn.onclick = async function() {
+    const text = getResultText();
+    if (!text) return;
+    hintBtn.disabled = true;
+    hintBtn.textContent = '⏳ ' + t('aiHintLoading');
+    try {
+      const hint = await AIService.getHint(text);
+      if (aiResultEl) {
+        aiResultEl.textContent = hint;
+        aiResultEl.style.display = 'block';
+      }
+    } catch (e) {
+      if (aiResultEl) {
+        aiResultEl.textContent = t('aiErrorCall') + ': ' + e.message;
+        aiResultEl.style.display = 'block';
+      }
+    }
+    hintBtn.disabled = false;
+    hintBtn.textContent = t('aiHint');
+  };
+
+  starterBtn.onclick = async function() {
+    const text = getResultText();
+    if (!text) return;
+    starterBtn.disabled = true;
+    starterBtn.textContent = '⏳ ' + t('aiHintLoading');
+    try {
+      const starter = await AIService.getStarter(text);
+      if (aiResultEl) {
+        aiResultEl.textContent = starter;
+        aiResultEl.style.display = 'block';
+      }
+      // 添加复制按钮
+      if (aiResultEl && !aiResultEl.querySelector('.ai-copy-starter')) {
+        const cpy = document.createElement('button');
+        cpy.className = 'copy-btn ai-copy-starter';
+        cpy.textContent = t('aiCopyStarter');
+        cpy.style.marginTop = '10px';
+        cpy.onclick = () => copyToClipboard(starter, cpy);
+        aiResultEl.appendChild(cpy);
+      }
+    } catch (e) {
+      if (aiResultEl) {
+        aiResultEl.textContent = t('aiErrorCall') + ': ' + e.message;
+        aiResultEl.style.display = 'block';
+      }
+    }
+    starterBtn.disabled = false;
+    starterBtn.textContent = t('aiStarter');
+  };
+
+  actionsEl.appendChild(hintBtn);
+  actionsEl.appendChild(starterBtn);
+}
 async function copyToClipboard(text, btn) {
   try {
     await navigator.clipboard.writeText(text);

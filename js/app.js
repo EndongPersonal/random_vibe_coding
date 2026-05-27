@@ -99,26 +99,39 @@ const App = {
     if (mode && mode.onActivate) {
       mode.onActivate();
     }
+    this.injectAIForCurrentMode();
   },
 
   // 切换模式
   switchMode(name) {
     this.currentMode = name;
-
     document.querySelectorAll('.nav-btn').forEach(btn => {
       const active = btn.dataset.mode === name;
       btn.classList.toggle('active', active);
       btn.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
-
     document.querySelectorAll('.mode-panel').forEach(p => {
       p.classList.toggle('active', p.id === 'panel-' + name);
     });
-
     const mode = this.modes[name];
     if (mode && mode.onActivate) {
       mode.onActivate();
     }
+    this.injectAIForCurrentMode();
+  },
+
+  // 为当前模式注入 AI 增强按钮
+  injectAIForCurrentMode() {
+    const panel = document.querySelector('.mode-panel.active');
+    if (!panel) return;
+    const actionsEl = panel.querySelector('.result-actions');
+    const resultEl = panel.querySelector('.result-area');
+    if (!actionsEl) return;
+    // 为每个模式自动注入 (去重)
+    if (actionsEl.querySelector('.ai-hint-btn')) return;
+    const cfg = AIService.getConfig();
+    if (!cfg.enabled) return;
+    injectAIButtons(actionsEl, () => resultEl?._lastResult || '');
   },
 
   init() {
@@ -145,8 +158,66 @@ const App = {
       this.switchMode(btn.dataset.mode);
     });
 
+    // AI 设置面板
+    this.initAIPanel();
+
     this.rebuildPanels();
     this.updateI18n();
+  },
+
+  // AI 设置面板
+  initAIPanel() {
+    const overlay = document.getElementById('aiModalOverlay');
+    const closeBtn = document.getElementById('aiModalClose');
+    const saveBtn = document.getElementById('aiSaveBtn');
+    const testBtn = document.getElementById('aiTestBtn');
+    const apiKeyEl = document.getElementById('aiApiKey');
+    const endpointEl = document.getElementById('aiEndpoint');
+    const modelEl = document.getElementById('aiModel');
+    const resultEl = document.getElementById('aiTestResult');
+    const aiBtn = document.getElementById('btnAI');
+
+    // 加载已有配置
+    const cfg = AIService.getConfig();
+    if (cfg.apiKey) apiKeyEl.value = cfg.apiKey;
+    if (cfg.endpoint) endpointEl.value = cfg.endpoint;
+    if (cfg.model) modelEl.value = cfg.model;
+
+    const openModal = () => { overlay.style.display = 'flex'; };
+    const closeModal = () => { overlay.style.display = 'none'; };
+
+    if (aiBtn) aiBtn.onclick = openModal;
+    if (closeBtn) closeBtn.onclick = closeModal;
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+
+    if (saveBtn) saveBtn.onclick = () => {
+      AIService.saveConfig({
+        apiKey: apiKeyEl.value.trim(),
+        endpoint: endpointEl.value.trim() || AIService.defaultConfig.endpoint,
+        model: modelEl.value.trim() || AIService.defaultConfig.model
+      });
+      closeModal();
+      // 刷新当前模式的 AI 按钮
+      const panel = document.querySelector('.mode-panel.active');
+      if (panel) {
+        const ae = panel.querySelector('.result-actions');
+        if (ae) { ae.querySelectorAll('.ai-hint-btn,.ai-starter-btn').forEach(b => b.remove()); }
+      }
+      this.injectAIForCurrentMode();
+    };
+
+    if (testBtn) testBtn.onclick = async () => {
+      AIService.saveConfig({
+        apiKey: apiKeyEl.value.trim(),
+        endpoint: endpointEl.value.trim() || AIService.defaultConfig.endpoint,
+        model: modelEl.value.trim() || AIService.defaultConfig.model
+      });
+      resultEl.textContent = t('aiTesting');
+      resultEl.className = 'ai-test-result';
+      const r = await AIService.testConnection();
+      resultEl.textContent = r.ok ? t('aiTestOk') : t('aiTestFail') + ': ' + (r.error || '');
+      resultEl.className = 'ai-test-result ' + (r.ok ? 'success' : 'error');
+    };
   }
 };
 

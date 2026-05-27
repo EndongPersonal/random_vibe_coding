@@ -1046,6 +1046,144 @@ body {
 .fishing-coll-name { font-size: 0.7rem; color: var(--text-secondary); }
 .fishing-coll-rarity { font-size: 0.64rem; font-weight: 600; }
 
+/* ====== AI Modal ====== */
+.ai-modal-overlay {
+  position: fixed; inset: 0;
+  z-index: 100;
+  background: rgba(0,0,0,0.4);
+  display: flex; align-items: center; justify-content: center;
+  animation: fadeIn 0.2s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.ai-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  width: 90%; max-width: 460px;
+  max-height: 90vh; overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  animation: modalIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalIn {
+  from { transform: translateY(20px) scale(0.96); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.ai-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px 0;
+}
+
+.ai-modal-header h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.ai-modal-close {
+  background: none; border: none;
+  font-size: 1.5rem; color: var(--text-tertiary);
+  cursor: pointer; padding: 0 4px;
+  line-height: 1;
+}
+
+.ai-modal-close:hover { color: var(--text); }
+
+.ai-modal-body {
+  padding: 16px 24px 24px;
+}
+
+.ai-modal-note {
+  font-size: 0.82rem;
+  color: var(--text-tertiary);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.ai-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  margin-top: 12px;
+}
+
+.ai-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-family: var(--font);
+  background: var(--input-bg);
+  color: var(--text);
+  transition: border-color 0.15s ease;
+}
+
+.ai-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0,113,227,0.12);
+}
+
+.ai-modal-actions {
+  display: flex; gap: 10px;
+  margin-top: 20px;
+}
+
+.ai-test-result {
+  margin-top: 12px;
+  font-size: 0.82rem;
+  min-height: 20px;
+}
+
+.ai-test-result.success { color: var(--success); }
+.ai-test-result.error   { color: var(--danger); }
+
+/* AI 按钮 */
+.ai-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 6px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  font-family: var(--font);
+  line-height: 1;
+}
+
+.ai-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+}
+
+.ai-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* AI 结果展开区 */
+.ai-result {
+  margin-top: 12px;
+  padding: 16px 20px;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  text-align: left;
+  white-space: pre-wrap;
+  animation: panelIn 0.25s ease;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
 /* ====== Scrollbar ====== */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
