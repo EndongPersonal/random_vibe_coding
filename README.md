@@ -63,6 +63,7 @@ proj_1/
 ├── js/
 │   ├── app.js              # 入口 + 模式路由
 │   ├── i18n.js             # 中英翻译
+│   ├── ai.js               # AI API 服务
 │   ├── topics.js           # 650+ 选项池数据
 │   ├── utils.js            # 通用工具函数
 │   └── modes/
@@ -90,13 +91,22 @@ proj_1/
 - **发布平台** 25 种：小程序、Telegram Bot、Electron、Chrome 扩展……
 - **更多**：60 张任务卡、64 卦 coding 哲学、20 组程序员二元对立……
 
+### 🤖 AI 增强 (可选)
+
+支持接入 OpenAI 兼容 API，为灵感生成提供智能增强：
+
+- **✨ AI 解读**：分析灵感的推荐技术栈、核心难点、预估时间、参考资源
+- **🚀 一键 Vibe**：生成项目启动模板（项目名、技术栈、功能列表、目录结构）
+- **🎨 扩展选项池**：AI 可为任意类别生成更多创意选项
+
+配置方式：点击页面右上角 `⚙️ AI`，填入 API Key 即可启用。API Key 仅存储在本地浏览器。
+
 ### 后续计划
 
-- [ ] 更多创意模式（占卜、命运之书、AI 灵感注入……）
+- [x] AI 灵感注入（✨ AI 解读 / 🚀 一键 Vibe）
+- [ ] 更多创意模式（占卜、命运之书……）
 - [ ] 接入 Supabase 实现跨设备 Trends 排行榜
-- [ ] 主题切换（更多视觉风格）
 - [ ] 导出/分享 idea 为图片
-- [ ] 国际化支持更多语言
 
 ### 🔥 灵感广场 · Trends 精选
 
@@ -189,6 +199,7 @@ proj_1/
 ├── js/
 │   ├── app.js              # Entry + mode router
 │   ├── i18n.js             # i18n translations
+│   ├── ai.js               # AI API service
 │   ├── topics.js           # 650+ option pool data
 │   ├── utils.js            # Utility functions
 │   └── modes/
@@ -203,7 +214,6 @@ proj_1/
 │       ├── factory.js      # Idea factory
 │       ├── trends.js       # Trends ranking
 │       └── fishing.js      # Fishing
-│       └── fishing.js      # Fishing
 └── LICENSE                 # MIT
 ```
 
@@ -217,13 +227,22 @@ proj_1/
 - **Platforms** 25: mini-programs, Telegram Bot, Electron, Chrome extensions...
 - **More**: 60 task cards, 64 I Ching hexagrams, 20 developer dilemmas...
 
+### 🤖 AI Enhancement (Optional)
+
+Supports OpenAI-compatible API integration for intelligent idea enhancement:
+
+- **✨ AI Hint**: Analyze recommended tech stack, core challenges, estimated time, reference resources
+- **🚀 Start Vibe**: Generate project starter template (name, tech stack, feature list, directory structure)
+- **🎨 Expand Pools**: AI can generate more creative options for any category
+
+Setup: Click `⚙️ AI` in the top bar, enter your API Key. The key is stored only in your local browser.
+
 ### Roadmap
 
-- [ ] More creative modes (fortune telling, book of fate, AI inspiration...)
+- [x] AI inspiration (✨ AI Hint / 🚀 Start Vibe)
+- [ ] More creative modes (fortune telling, book of fate...)
 - [ ] Supabase integration for cross-device Trends ranking
-- [ ] Theme switching (more visual styles)
 - [ ] Export / share ideas as images
-- [ ] i18n support for more languages
 
 ### 🔥 Trends · Hot Ideas
 
